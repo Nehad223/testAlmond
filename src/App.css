@@ -7,7 +7,7 @@
 
 /* ================== Global ================== */
 body {
-  min-height: 100vh;
+  min-height: 100svh;
   margin: 0;
   font-family: var(--font-ar);
   font-weight: 700 !important;
@@ -19,7 +19,7 @@ body {
 
 .en { font-family: var(--font-en); }
 .app {
-  height: 100vh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
 }
@@ -586,7 +586,7 @@ direction: rtl;
   right: -420px; /* نقطة البداية خارج الشاشة */
   width: 380px;
   max-width: 95%;
-  height: 100vh;
+  height: 100svh;
   background: linear-gradient(180deg, #14110f, #1f1a17);
   border-left: 1px solid rgba(201,162,77,0.12);
   z-index: 1200;
@@ -760,7 +760,7 @@ direction: rtl;
   position: fixed;
   top: 0;
   right: 0;
-  height: 100vh;
+  height: 100svh;
   width: min(92vw, 420px);
   background: linear-gradient(180deg,#1f1a17,#14110f);
   border-left: 1px solid rgba(201,162,77,.25);
