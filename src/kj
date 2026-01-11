@@ -1,0 +1,380 @@
+/* ================== Fonts ================== */
+:root {
+  --font-ar: 'Cairo', system-ui, sans-serif;
+  --font-en: 'Poppins', system-ui, sans-serif;
+  --header-height: clamp(100px, 26vh, 350px) !important; /* ارتفاع الهيدر */
+}
+
+/* ================== Global ================== */
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--font-ar);
+  font-weight: 700 !important;
+  background: linear-gradient(180deg, #F39C12 0%, #D35400 100%) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-y: hidden;
+}
+
+.en { font-family: var(--font-en); }
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================== Loader ================== */
+.loader-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+.loader-logo {
+  width: 30vh;
+  height: 20vh;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+/* ================== Header & Logo ================== */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-height);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0));
+}
+
+.site-header .header-inner {
+  width: 100%;
+  padding: 0; /* شيل أي padding يخلق فجوات */
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+/* 🔧 توحيد أبعاد اللوغو فقط */
+.logo img {
+  width: 30vh;
+  height: 17vh;
+  display: block;
+  pointer-events: none;
+}
+
+/* ================== Navbar ================== */
+.gn-navbar {
+  position: relative;
+  width: 100% !important;
+  padding: 10px;
+  background-color: #1C1C1C !important;
+  box-sizing: border-box;
+}
+
+.gn-navbar::before,
+.gn-navbar::after {
+  content: "";
+  left: 0; right: 0;
+}
+
+.gn-navbar::before { top: 0; }
+.gn-navbar::after { bottom: 0; }
+
+/* Navigation */
+.gn-nav-list {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  padding: 0 12px;
+  margin: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.gn-nav-list::-webkit-scrollbar { display: none; }
+
+.gn-nav-item { position: relative; }
+
+.gn-nav-link {
+  background: none;
+  border: none;
+  padding: 6px 4px;
+  font-size: clamp(20px, 3vw, 30px) !important;
+  letter-spacing: .6px;
+  color: #e6e6e6 !important;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: all .2s ease;
+}
+
+.gn-nav-link:focus { outline: none; box-shadow: none; }
+button::-moz-focus-inner { border: 0; }
+
+/* underline effect */
+.gn-nav-link.active::after,
+.gn-dropdown-toggle:hover::after,
+.gn-dropdown-toggle.active::after,
+.gn-dropdown-toggle[aria-expanded="true"]::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    #c9a24d,
+    #f3d98b,
+    #c9a24d,
+    transparent
+  );
+}
+
+/* ================== Scrollable Cards ================== */
+.main-scroll {
+  margin-top: var(--header-height);
+  min-height: calc(100vh - var(--header-height));
+  display: flex;
+  flex-direction: column;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 70px;
+}
+
+.content-wrap {
+  padding: 2vh 1vh 30px 1vh !important;
+  flex: 1;
+}
+
+/* ================== Cards ================== */
+.Cards {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 10px;
+  box-sizing: border-box;
+  direction: rtl; /* 🔧 توحيد الاتجاه */
+}
+
+
+.Card_Slider {
+  background-color: #1F1A12 !important;
+  border-radius: 10px;
+}
+
+.card { background-color: transparent !important; }
+
+/* Image wrapper */
+.img-wrapper {
+  width: 100%;
+  height: 15vh;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+}
+
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.img-wrapper.loading img {
+  opacity: 1;
+  filter: blur(20px);
+  background: #1F1A12;
+}
+
+.img-wrapper.loaded img {
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* Card info */
+.Card_Slider .info {
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+  background: #1F1A17;
+  color: #E6CEB4 !important;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.1);
+}
+
+/* ================== Modal ================== */
+.price-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  z-index: 10000;
+  animation: fadeIn .2s ease;
+}
+
+.price-modal {
+  width: 340px;
+  padding: 22px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #1f1a17, #14110f);
+  border: 1px solid rgba(201,162,77,.25);
+  color: #e6ceb4;
+  direction: rtl;
+  animation: scaleIn .2s ease;
+}
+
+.price-modal-title {
+  margin-bottom: 18px;
+  font-size: 17px;
+  text-align: center;
+  color: #f3d98b;
+}
+
+/* ================== Swiper ================== */
+.swiper { padding: 0 12px; }
+.swiper-slide { display: flex; align-items: center; }
+
+/* ================== Animations ================== */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translate(-50%, -6px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(.95); }
+  to   { transform: scale(1); }
+}
+
+/* ================== Cards appear ================== */
+.Cards > div {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+.Cards > div.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================== Responsive (مطابق للأول) ================== */
+@media (max-width: 1000px) {
+  .Card_Slider .info h1 { font-size: 0.8rem !important; }
+  .Card_Slider .info { height: 100px; }
+}
+
+@media (max-width: 700px) {
+  .Cards { grid-template-columns: 1fr; }
+  :root { --header-height: clamp(110px, 32vh, 260px); }
+  .Card_Slider .info { height: 90px; }
+}
+
+@media (min-width: 701px) and (max-width: 1199px) {
+  .Card_Slider .info { height: 110px; }
+  .Cards {
+    grid-template-columns: repeat(3, 1fr) !important;
+    max-width: 1200px;
+  }
+  .img-wrapper img {
+
+  object-fit: fill;
+
+}
+}
+
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .Card_Slider .info { height: 130px; }
+  .Cards {
+    grid-template-columns: repeat(4, 1fr) !important;
+    max-width: 1600px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .Card_Slider .info { height: 150px; }
+  .Cards {
+    grid-template-columns: repeat(4, 1fr) !important;
+    max-width: 1800px;
+  }
+}
+
+/* ================== Loader Credit ================== */
+.loader-credit {
+  margin-top: 14px;
+  font-size: 12px;
+  opacity: 0.45;
+  color: #fff;
+  font-family: var(--font-ar);
+  letter-spacing: 0.3px;
+}
+/* ================== Text Normalization ================== */
+
+/* العنوان داخل الكرت */
+.Card_Slider .info h1 {
+  font-size: 0.9rem;
+  line-height: 1.25;
+  margin: 0;
+}
+
+/* الشاشات الصغيرة */
+@media (max-width: 700px) {
+  .Card_Slider .info h1 {
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+}
+
+/* الشاشات المتوسطة */
+@media (min-width: 701px) and (max-width: 1199px) {
+  .Card_Slider .info h1 {
+    font-size: 0.95rem;
+  }
+}
+
+/* الشاشات الكبيرة */
+@media (min-width: 1200px) {
+  .Card_Slider .info h1 {
+    font-size: 1.4rem;
+    line-height: 1.3;
+  }
+}

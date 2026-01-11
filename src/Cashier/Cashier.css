@@ -1,0 +1,282 @@
+:root {
+  --orange-1: #ff7a18;
+  --orange-2: #ff9f1c;
+  --orange-3: #ffb703;
+  --glass: rgba(0, 0, 0, 0.45);
+  --border: rgba(255, 180, 80, 0.35);
+  --text: #f3f4f6;
+  --muted: #d1d5db;
+  --success: #22c55e;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+
+.cashier-container {
+  min-height: 100vh;
+  padding: 24px;
+  background: linear-gradient(
+    135deg,
+    var(--orange-1),
+    var(--orange-2),
+    var(--orange-3)
+  );
+  color: var(--text);
+}
+
+.cashier-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+/* ===== Table ===== */
+
+.table-wrapper {
+  background: var(--glass);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.cashier-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cashier-table th,
+.cashier-table td {
+  padding: 14px;
+  text-align: right;
+}
+
+.cashier-table thead {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.cashier-table tbody tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.order-id {
+  font-weight: 900;
+  color: #ffd166;
+}
+
+.order-price {
+  font-weight: 900;
+  color: #ffd166;
+}
+
+.order-items {
+  font-size: 0.85rem;
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+  padding: 3px 0;
+}
+
+.qty {
+  font-weight: 800;
+  color: #ffd166;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.small {
+  font-size: 0.75rem;
+}
+
+/* ===== Cards ===== */
+
+.order-card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-meta {
+  font-size: 0.8rem;
+  margin: 6px 0;
+  color: var(--muted);
+}
+
+/* ===== Buttons ===== */
+
+.btn-finish {
+  background: linear-gradient(180deg, #ffd166, #fca311);
+  border: none;
+  border-radius: 12px;
+  padding: 8px 18px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.btn-finish.full {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-cancel {
+  flex: 1;
+  background: #374151;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.btn-confirm {
+  flex: 1;
+  background: linear-gradient(180deg, #4ade80, #22c55e);
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  font-weight: 900;
+}
+
+/* ===== Modal ===== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-box {
+  background: #1a0f05;
+  border-radius: 18px;
+  padding: 22px;
+  width: 320px;
+}
+
+.modal-title {
+  color: #ffd166;
+  font-weight: 900;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* ===== States ===== */
+
+.row-active {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.row-done {
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.done-label {
+  font-weight: 900;
+  color: var(--success);
+}
+
+/* ===== Animations ===== */
+
+.animate-row {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Responsive ===== */
+
+.desktop-only {
+  display: none;
+}
+
+.mobile-only {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .desktop-only {
+    display: block;
+  }
+  .mobile-only {
+    display: none;
+  }
+}
+
+.item-row.with-image {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.item-img {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.card-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.cashier-container {
+  height: 100vh;   /* أو min-height */
+  overflow-y: auto;
+}
+
+/* Highlight الطلب الجديد */
+.row-new {
+  animation: popIn 0.5s ease-out forwards;
+  background: rgba(255, 200, 0, 0.3);
+}
+
+.order-card-new {
+  animation: popIn 0.5s ease-out forwards;
+  border: 1px solid #ffd166;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  50% {
+    transform: scale(1.05) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
