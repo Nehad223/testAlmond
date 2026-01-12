@@ -13,6 +13,7 @@ const CartDrawer = ({
 }) => {
 
   const [showCheckout, setShowCheckout] = useState(false);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -100,6 +101,24 @@ const CartDrawer = ({
     }
   };
 
+  const handleClear = () => {
+    if (isSending) return;
+    if (cart.length === 0) {
+      toast.info("السلة فارغة بالفعل");
+      setShowClearConfirm(false);
+      return;
+    }
+
+    if (typeof clearCart === "function") {
+      clearCart();
+      toast.success("تم إفراغ محتويات السلة");
+      setShowClearConfirm(false);
+    } else {
+      toast.error("تعذر إفراغ السلة — الدالة clearCart غير متوفرة");
+      setShowClearConfirm(false);
+    }
+  };
+
   return (
     <>
       <div className={`cart-drawer-overlay ${open ? 'open' : ''}`} onClick={onClose} />
@@ -108,7 +127,7 @@ const CartDrawer = ({
 
         <div className="cart-header">
           <h3>السلة</h3>
-          <button className="close-btn" onClick={onClose} disabled={isSending}>×</button>
+          <button className="close-btn" onClick={onClose} disabled={isSending} aria-label="إغلاق السلة">×</button>
         </div>
 
         <div className="cart-content">
@@ -128,9 +147,9 @@ const CartDrawer = ({
                   </div>
 
                   <div className="controls">
-                    <button onClick={() => decQty(item.id)} disabled={isSending} className="qty-btn">-</button>
-                    <div>{item.qty}</div>
-                    <button onClick={() => incQty(item.id)} disabled={isSending} className="qty-btn">+</button>
+                    <button onClick={() => decQty(item.id)} disabled={isSending} className="qty-btn" aria-label={`نقص ${item.name}`}>-</button>
+                    <div className="qty">{item.qty}</div>
+                    <button onClick={() => incQty(item.id)} disabled={isSending} className="qty-btn" aria-label={`زيادة ${item.name}`}>+</button>
 
                     <div className="subtotal">
                       {(item.price * item.qty).toFixed(2)} ل.س
@@ -150,6 +169,25 @@ const CartDrawer = ({
 
           <div className="footer-actions">
             <button className="btn btn-cancel" onClick={onCancel} disabled={isSending}>إلغاء</button>
+
+            {/* زر افراغ السلة المحترف */}
+            <button
+              className="btn btn-clear"
+              onClick={() => setShowClearConfirm(true)}
+              disabled={isSending || cart.length === 0}
+              aria-label="افراغ السلة"
+              title="افراغ السلة"
+            >
+              {/* أيقونة سلة مهملات صغيرة */}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden focusable="false" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6h18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M10 11v6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M14 11v6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+
             <button
               className="btn btn-order"
               onClick={() => { if (!isSending && cart.length > 0) setShowCheckout(true); }}
@@ -181,29 +219,27 @@ const CartDrawer = ({
               <input value={name} onChange={e => setName(e.target.value)} placeholder="الاسم الكامل" disabled={isSending}/>
               <img src="/name.webp" />
             </div>
-<div className="checkout-input">
-  <input
-    type="text"
-    value={phone}
-    placeholder="رقم الهاتف"
-    disabled={isSending}
-    maxLength={10}
-    onChange={(e) => {
-      const value = e.target.value.replace(/\D/g, "");
+            <div className="checkout-input">
+              <input
+                type="text"
+                value={phone}
+                placeholder="رقم الهاتف"
+                disabled={isSending}
+                maxLength={10}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "");
 
-      if (value.length <= 10) {
-        setPhone(value);
-      }
-    }}
-  />
-  <img src="/phone.webp" />
-</div>
-
+                  if (value.length <= 10) {
+                    setPhone(value);
+                  }
+                }}
+              />
+              <img src="/phone.webp" />
+            </div>
 
             <div className="checkout-input">
               <input value={location} onChange={e => setLocation(e.target.value)} placeholder="العنوان بالتفصيل" disabled={isSending}/>
               <img src="/location.webp" />
-
             </div>
 
             <button
@@ -214,6 +250,21 @@ const CartDrawer = ({
               تأكيد الطلب
             </button>
 
+          </div>
+        </div>
+      )}
+
+      {/* Confirm clear modal */}
+      {showClearConfirm && (
+        <div className="clear-confirm-overlay" role="dialog" aria-modal="true" onClick={() => !isSending && setShowClearConfirm(false)}>
+          <div className="clear-confirm-modal" onClick={(e) => e.stopPropagation()}>
+            <h3>تأكيد افراغ السلة</h3>
+            <p>هل أنت متأكد من حذف جميع العناصر؟ لا يمكن التراجع عن هذا الإجراء.</p>
+
+            <div className="clear-actions">
+              <button className="btn btn-cancel" onClick={() => setShowClearConfirm(false)} disabled={isSending}>إلغاء</button>
+              <button className="btn btn-clear-confirm" onClick={handleClear} disabled={isSending || cart.length === 0}>أفرغ السلة</button>
+            </div>
           </div>
         </div>
       )}

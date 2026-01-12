@@ -1,4 +1,3 @@
-// Main_page (محدّث مع حد 99 للعناصر الإجمالية)
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -19,8 +18,6 @@ const Main_page = ({
   const [activeCategory, setActiveCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [uiReady, setUiReady] = useState(false);
-
-  /* ======= سلة المشتريات وفتح الدروير ======= */
   const [cartOpen, setCartOpen] = useState(false);
   const [cart, setCart] = useState([]);
   const clearCart = () => setCart([]);
@@ -41,7 +38,7 @@ const Main_page = ({
         setData(json);
         setActiveCategory(0);
 
-        // تحميل الصور الحرجة مع timeout لتفادي التعليق
+
         Promise.all(
           criticalImages.map(src =>
             new Promise(res => {
@@ -206,7 +203,7 @@ const Main_page = ({
     }
   };
 
-  // عرض اللودر حتى تحميل البيانات + الصور الحرجة
+
   if (loading || !uiReady) return <Loader />;
 
   return (

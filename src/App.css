@@ -81,7 +81,7 @@ top: 2px;
 margin-left: 5px;
  width: 30px;
  height: 25px;
- text-align: center;
+ text-align: center !important;
  position: absolute;
 background-color: #D62828;
   box-shadow: 0 4px 10px rgba(0,0,0,.35);
@@ -1068,4 +1068,89 @@ button[disabled],
 /* عند hover على الزر، نجعل + يلمع قليلاً */
 .Add_Store_Btn:hover .add_op_Text img {
   transform: scale(1.1);
+}
+/* زر افراغ السلة (أيقونة صغيرة، تصميم احترافي) */
+.btn-clear{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(214, 50, 50, 0.12);
+  background: linear-gradient(135deg,#D62828,#BC1E1E);
+  color: #E6CEB4;
+  gap: 6px;
+  min-width: 44px;
+  max-width: 44px;
+  height: 44px;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+  font-weight: 800;
+}
+
+/* hover */
+.btn-clear:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(214,50,50,0.08);
+  color: #fff;
+}
+
+/* زر التأكيد داخل نافذة التأكيد (لون تحذيري) */
+.btn-clear-confirm{
+  background: linear-gradient(135deg,#D62828,#BC1E1E) ;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 900;
+}
+
+/* نافذة التأكيد */
+.clear-confirm-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11000;
+}
+
+.clear-confirm-modal{
+  width: min(92vw, 400px);
+  background: linear-gradient(180deg,#1f1a17,#14110f);
+  border-radius: 14px;
+  padding: 18px;
+  color: #E6CEB4;
+  border: 1px solid rgba(201,162,77,0.12);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.6);
+  text-align: right;
+  direction: rtl;
+}
+
+.clear-confirm-modal h3{
+  margin: 0 0 8px 0;
+  color: #f3d98b;
+  font-size: 1.05rem;
+}
+
+.clear-confirm-modal p{
+  margin: 0 0 14px 0;
+  opacity: 0.85;
+  font-size: .95rem;
+}
+
+.clear-actions{
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+/* عند تعطيل الأزرار */
+.btn[disabled], .btn-clear[disabled], .btn-clear-confirm[disabled]{
+  opacity: .55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
