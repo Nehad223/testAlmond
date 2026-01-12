@@ -22,9 +22,9 @@
   --warning: #facc15;
 
   /* sizes */
-  --base-font: clamp(14px, 1.6vw, 18px);
-  --lead-font: clamp(20px, 2.6vw, 28px);
-  --title-lg: clamp(26px, 2.4vw, 36px);
+  --base-font: clamp(13px, 1.5vw, 15px);
+  --lead-font: clamp(19px, 2.4vw, 23px);
+  --title-lg: clamp(24px, 2.2vw, 30px);
 
   /* item image size: default 48, small screens fallback to 42 */
   --item-img-size: 48px;
