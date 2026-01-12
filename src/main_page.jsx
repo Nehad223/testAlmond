@@ -26,7 +26,7 @@ const Main_page = ({
   const clearCart = () => setCart([]);
 
   useEffect(() => {
-    fetch("http://31.97.75.5/home/")
+    fetch("https://snackalmond.duckdns.org/home/")
       .then((res) => res.json())
       .then((json) => {
         setData(json);

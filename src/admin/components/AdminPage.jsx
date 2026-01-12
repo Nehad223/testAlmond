@@ -29,7 +29,7 @@ export default function AdminPage() {
   useEffect(() => {
     if (!token) return;
 
-    fetch("https://snackalmond1.pythonanywhere.com/getcategories/", {
+    fetch("https://snackalmond.duckdns.org/getcategories/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -84,7 +84,7 @@ export default function AdminPage() {
 
     try {
       const res = await fetch(
-        "https://snackalmond1.pythonanywhere.com/createcategory/",
+        "https://snackalmond.duckdns.org/createcategory/",
         {
           method: "POST",
           headers: {
@@ -124,7 +124,7 @@ export default function AdminPage() {
     try {
 
       const res = await fetch(
-        "https://snackalmond1.pythonanywhere.com/createmeal/",
+        "https://snackalmond.duckdns.org/createmeal/",
         {
           method: "POST",
           headers: {

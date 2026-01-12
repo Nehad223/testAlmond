@@ -8,7 +8,7 @@ export default function AdminLogin() {
     setError("");
 
     try {
-      const res = await fetch("https://snackalmond1.pythonanywhere.com/login/", {
+      const res = await fetch("https://snackalmond.duckdns.org/login/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

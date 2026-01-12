@@ -12,7 +12,7 @@ export default function CashierPage() {
     audioRef.current = new Audio("/Orders_up.mp3");
 
     // جلب الطلبات أول مرة
-    fetch("http://31.97.75.5/orders/")
+    fetch("https://snackalmond.duckdns.org/orders/")
       .then((res) => res.json())
       .then((data) => {
         console.log("📦 HTTP orders:", data);
@@ -87,7 +87,7 @@ export default function CashierPage() {
     });
 
     // إرسال تحديث للباك إند
-    fetch(`http://31.97.75.5/details/${pendingId}/`, {
+    fetch(`https://snackalmond.duckdns.org/details/${pendingId}/`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ state: "finish" }),

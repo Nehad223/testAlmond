@@ -69,7 +69,7 @@ const CartDrawer = ({
     };
 
     try {
-      const res = await fetch("http://31.97.75.5/createorder/", {
+      const res = await fetch("https://snackalmond.duckdns.org/createorder/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

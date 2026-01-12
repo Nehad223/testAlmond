@@ -20,7 +20,7 @@ const EditPage = () => {
   // حذف (API فقط)
   const deleteMeal = async (mealId) => {
     const res = await fetch(
-      `https://snackalmond1.pythonanywhere.com/editmeal/${mealId}/`,
+      `https://snackalmond.duckdns.org/editmeal/${mealId}/`,
       {
         method: "DELETE",
         headers: getAuthHeaders(),
@@ -35,7 +35,7 @@ const EditPage = () => {
   // تعديل (API فقط)
   const updateMeal = async (mealId, updatedData) => {
     const res = await fetch(
-      `https://snackalmond1.pythonanywhere.com/editmeal/${mealId}/`,
+      `https://snackalmond.duckdns.org/editmeal/${mealId}/`,
       {
         method: "PATCH",
         headers: getAuthHeaders(),
