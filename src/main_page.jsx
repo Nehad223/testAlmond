@@ -26,12 +26,12 @@ const Main_page = ({
 
   useEffect(() => {
     const criticalImages = [
-      "/logo.png",
+      "/logo.webp",
       "/pngegg.avif",
-      "/plus.png",
-      "/name.png",
-      "/location.png",
-      "/phone.png",
+      "/plus.webp",
+      "/name.webp",
+      "/location.webp",
+      "/phone.webp",
     ];
 
     fetch("https://snackalmond.duckdns.org/home/")

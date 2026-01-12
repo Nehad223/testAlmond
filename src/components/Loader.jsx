@@ -4,7 +4,7 @@ const Loader = () => {
   return (
     <div className="loader-container">
 <img
-  src="/logo.png"
+  src="/logo.webp"
   alt="Loading"
   className="loader-logo"
   fetchpriority="high"

@@ -9,7 +9,7 @@ const Add_Store_Btn = ({ meal, onAddToCart }) => {
         aria-label="إضافة إلى السلة"
       >
         <span>
-          <img className='add_op_Text' src='/plus.png' alt="+" />
+          <img className='add_op_Text' src='/plus.webp' alt="+" />
         </span>
         <span className='add_Text'> اضف </span>
         <span className='ToStore_Text'>الى السلة</span>

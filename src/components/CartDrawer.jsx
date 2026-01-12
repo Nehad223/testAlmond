@@ -179,18 +179,18 @@ const CartDrawer = ({
 
             <div className="checkout-input">
               <input value={name} onChange={e => setName(e.target.value)} placeholder="الاسم الكامل" disabled={isSending}/>
-              <img src="/name.png" />
+              <img src="/name.webp" />
             </div>
 
             <div className="checkout-input">
               <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="رقم الهاتف" disabled={isSending}/>
-              <img src="/phone.png" />
+              <img src="/phone.webp" />
             
             </div>
 
             <div className="checkout-input">
               <input value={location} onChange={e => setLocation(e.target.value)} placeholder="العنوان بالتفصيل" disabled={isSending}/>
-              <img src="/location.png" />
+              <img src="/location.webp" />
 
             </div>
 
