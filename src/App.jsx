@@ -29,7 +29,7 @@ function App() {
 
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/login2" element={<AdminLogin2 />} />
-<Route path='Cashier' element={<CashierPage/>} />
+<Route path='cashier' element={<CashierPage/>} />
 
 
         <Route
