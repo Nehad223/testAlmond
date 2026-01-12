@@ -7,7 +7,7 @@ import Cards from "./components/Cards";
 import Loader from "./components/Loader.jsx";
 import Footer2 from './Footers/Footer2/Fotter2.jsx';
 import Store from "./components/Store.jsx";
-import CartDrawer from "./components/CartDrawer.jsx"; // اضيف الملف الجديد
+import CartDrawer from "./components/CartDrawer.jsx";
 
 const Main_page = ({
   isAdmin = false,
@@ -17,52 +17,58 @@ const Main_page = ({
   const [data, setData] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
   const [loading, setLoading] = useState(true);
-const [uiReady, setUiReady] = useState(false);
+  const [uiReady, setUiReady] = useState(false);
 
   /* ======= سلة المشتريات وفتح الدروير ======= */
   const [cartOpen, setCartOpen] = useState(false);
-  const [cart, setCart] = useState([]); // كل عنصر: { id, name, price, qty, img }
-
-  // الآن بعد تعريف setCart نحط clearCart
+  const [cart, setCart] = useState([]);
   const clearCart = () => setCart([]);
 
-useEffect(() => {
-  const criticalImages = [
-    "/logo.png",
-    "/pngegg.avif",
-    "/plus.png",
-    "/name.png",
-    "/location.png",
-    "/phone.png",
+  useEffect(() => {
+    const criticalImages = [
+      "/logo.png",
+      "/pngegg.avif",
+      "/plus.png",
+      "/name.png",
+      "/location.png",
+      "/phone.png",
+    ];
 
+    fetch("https://snackalmond.duckdns.org/home/")
+      .then(res => res.json())
+      .then(json => {
+        setData(json);
+        setActiveCategory(0);
 
+        // تحميل الصور الحرجة مع timeout لتفادي التعليق
+        Promise.all(
+          criticalImages.map(src =>
+            new Promise(res => {
+              const img = new Image();
+              img.src = src;
 
+              const timeout = setTimeout(res, 2500); // أمان
 
-  ];
-
-  fetch("https://snackalmond.duckdns.org/home/")
-    .then(res => res.json())
-    .then(json => {
-      setData(json);
-      setActiveCategory(0);
-
-      Promise.all(
-        criticalImages.map(src => new Promise(res => {
-          const img = new Image();
-          img.src = src;
-          img.onload = res;
-          img.onerror = res;
-        }))
-      ).then(() => {
+              img.onload = () => {
+                clearTimeout(timeout);
+                res();
+              };
+              img.onerror = () => {
+                clearTimeout(timeout);
+                res();
+              };
+            })
+          )
+        ).then(() => {
+          setLoading(false);
+          setUiReady(true);
+        });
+      })
+      .catch(() => {
         setLoading(false);
         setUiReady(true);
       });
-    })
-    .catch(() => {
-      setLoading(false);
-      setUiReady(true);
-    });
-}, []);
+  }, []);
 
   /* ======= دوال السلة ======= */
   const addToCart = (meal) => {
@@ -79,7 +85,6 @@ useEffect(() => {
         img: meal.image || meal.img || '/pngegg.avif' 
       }];
     });
-    // ما بنفتح السلة آلياً هون حسب طلبك
   };
 
   const incQty = (id) => {
@@ -89,10 +94,7 @@ useEffect(() => {
     setCart(prev => {
       const item = prev.find(i => i.id === id);
       if (!item) return prev;
-      if (item.qty <= 1) {
-        // نحذف العنصر لو صار صفر
-        return prev.filter(i => i.id !== id);
-      }
+      if (item.qty <= 1) return prev.filter(i => i.id !== id);
       return prev.map(i => i.id === id ? { ...i, qty: i.qty - 1 } : i);
     });
   };
@@ -105,7 +107,6 @@ useEffect(() => {
       toast.info("السلة فارغة");
       return;
     }
-    // ممكن تستخدم هالـ handler لو بدك إرسال مباشر من هنا
     toast.success("تم إرسال الطلب بنجاح!");
     setCart([]);
     setCartOpen(false);
@@ -125,9 +126,7 @@ useEffect(() => {
       setData((prev) =>
         prev.map((cat) => ({
           ...cat,
-          meals: cat.meals.filter(
-            (meal) => meal.id !== mealId
-          ),
+          meals: cat.meals.filter((meal) => meal.id !== mealId),
         }))
       );
 
@@ -146,9 +145,7 @@ useEffect(() => {
         prev.map((cat) => ({
           ...cat,
           meals: cat.meals.map((meal) =>
-            meal.id === mealId
-              ? { ...meal, ...updatedData }
-              : meal
+            meal.id === mealId ? { ...meal, ...updatedData } : meal
           ),
         }))
       );
@@ -159,16 +156,14 @@ useEffect(() => {
     }
   };
 
-if (loading || !uiReady) return <Loader />;
-
+  // عرض اللودر حتى تحميل البيانات + الصور الحرجة
+  if (loading || !uiReady) return <Loader />;
 
   return (
     <div className="app">
-      
       <header className="site-header">
         <div className="header-inner">
           <Logo />
-          {/* مرّر عدد العناصر ودالة فتح السلة */}
           <Store count={cartCount} onToggle={() => setCartOpen(true)} />
           <Navbar
             categories={data}
@@ -179,7 +174,6 @@ if (loading || !uiReady) return <Loader />;
       </header>
 
       <main className="main-scroll">
-        
         <div className="content-wrap">
           {data?.[activeCategory]?.meals?.length > 0 && (
             <Cards
@@ -193,7 +187,6 @@ if (loading || !uiReady) return <Loader />;
           )}
         </div>
       </main>
-      
 
       <CartDrawer
         open={cartOpen}
@@ -204,7 +197,7 @@ if (loading || !uiReady) return <Loader />;
         total={cartTotal}
         onOrder={handleOrder}
         onCancel={handleCancel}
-        clearCart={clearCart} // بنمرر دالة تفريغ السلة
+        clearCart={clearCart}
       />
 
       <Footer2/>
@@ -213,4 +206,3 @@ if (loading || !uiReady) return <Loader />;
 };
 
 export default Main_page;
-
