@@ -177,7 +177,7 @@ const Main_page = ({
         }))
       );
 
-      toast.success("تم حذف الوجبة");
+      toast.success("تم حذف الوجبات");
     } catch {
       toast.error("فشل الحذف");
     }
