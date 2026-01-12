@@ -17,6 +17,7 @@ const Main_page = ({
   const [data, setData] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
   const [loading, setLoading] = useState(true);
+const [uiReady, setUiReady] = useState(false);
 
   /* ======= سلة المشتريات وفتح الدروير ======= */
   const [cartOpen, setCartOpen] = useState(false);
@@ -25,16 +26,43 @@ const Main_page = ({
   // الآن بعد تعريف setCart نحط clearCart
   const clearCart = () => setCart([]);
 
-  useEffect(() => {
-    fetch("https://snackalmond.duckdns.org/home/")
-      .then((res) => res.json())
-      .then((json) => {
-        setData(json);
-        setActiveCategory(0);
+useEffect(() => {
+  const criticalImages = [
+    "/logo.png",
+    "/pngegg.avif",
+    "/plus.png",
+    "/name.png",
+    "/location.png",
+    "/phone.png",
+
+
+
+
+  ];
+
+  fetch("https://snackalmond.duckdns.org/home/")
+    .then(res => res.json())
+    .then(json => {
+      setData(json);
+      setActiveCategory(0);
+
+      Promise.all(
+        criticalImages.map(src => new Promise(res => {
+          const img = new Image();
+          img.src = src;
+          img.onload = res;
+          img.onerror = res;
+        }))
+      ).then(() => {
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+        setUiReady(true);
+      });
+    })
+    .catch(() => {
+      setLoading(false);
+      setUiReady(true);
+    });
+}, []);
 
   /* ======= دوال السلة ======= */
   const addToCart = (meal) => {
@@ -131,7 +159,8 @@ const Main_page = ({
     }
   };
 
-  if (loading) return <Loader />;
+if (loading || !uiReady) return <Loader />;
+
 
   return (
     <div className="app">

@@ -21,7 +21,7 @@ export default function CashierPage() {
       .catch(console.error);
 
     // WebSocket للإشعارات
-    const socket = new WebSocket("ws://31.97.75.5/ws/orders/");
+    const socket = new WebSocket("ws://snackalmond.duckdns.org/ws/orders/");
 
     socket.onopen = () => console.log("✅ WebSocket connected");
 
