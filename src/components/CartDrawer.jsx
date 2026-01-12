@@ -181,12 +181,24 @@ const CartDrawer = ({
               <input value={name} onChange={e => setName(e.target.value)} placeholder="الاسم الكامل" disabled={isSending}/>
               <img src="/name.webp" />
             </div>
+<div className="checkout-input">
+  <input
+    type="text"
+    value={phone}
+    placeholder="رقم الهاتف"
+    disabled={isSending}
+    maxLength={10}
+    onChange={(e) => {
+      const value = e.target.value.replace(/\D/g, "");
 
-            <div className="checkout-input">
-              <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="رقم الهاتف" disabled={isSending}/>
-              <img src="/phone.webp" />
-            
-            </div>
+      if (value.length <= 10) {
+        setPhone(value);
+      }
+    }}
+  />
+  <img src="/phone.webp" />
+</div>
+
 
             <div className="checkout-input">
               <input value={location} onChange={e => setLocation(e.target.value)} placeholder="العنوان بالتفصيل" disabled={isSending}/>

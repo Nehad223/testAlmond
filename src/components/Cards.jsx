@@ -24,3 +24,4 @@ const Cards = ({ meals = [], isAdmin, onDelete, onUpdateProduct, onAddToCart }) 
 };
 
 export default Cards;
+

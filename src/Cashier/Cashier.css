@@ -1,42 +1,117 @@
+/* ===============================
+   Root Variables
+=============================== */
 :root {
   --orange-1: #ff7a18;
   --orange-2: #ff9f1c;
   --orange-3: #ffb703;
-  --glass: rgba(0, 0, 0, 0.45);
-  --border: rgba(255, 180, 80, 0.35);
-  --text: #f3f4f6;
-  --muted: #d1d5db;
+
+  --glass: rgba(0, 0, 0, 0.55);
+  --glass-soft: rgba(0, 0, 0, 0.35);
+
+  --border: rgba(255, 180, 80, 0.25);
+
+  --text: #f9fafb;
+  --muted: #cbd5e1;
+
   --success: #22c55e;
+  --danger: #ef4444;
+  --warning: #facc15;
 }
 
+
+/* ===============================
+   Global
+=============================== */
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
 }
 
+/* ===============================
+   Layout
+=============================== */
 .cashier-container {
-  min-height: 100svh;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 24px;
-  background: linear-gradient(
-    135deg,
-    var(--orange-1),
-    var(--orange-2),
-    var(--orange-3)
-  );
+
+
   color: var(--text);
+
+  scrollbar-width: thin;
+  scrollbar-color: #ffd166 transparent;
 }
 
+.cashier-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cashier-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cashier-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ffd166, #fca311);
+  border-radius: 999px;
+}
+
+/* ===============================
+   Title
+=============================== */
 .cashier-title {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   font-weight: 900;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 }
 
-/* ===== Table ===== */
+/* ===============================
+   Connection Status
+=============================== */
+.connection-status {
+  position: fixed;
+  top: 14px;
+  right: 24px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: 999px;
 
+  font-size: 0.85rem;
+  font-weight: 900;
+
+  z-index: 99999;
+  pointer-events: none;
+
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.connection-status .online { color: var(--success); }
+.connection-status .offline { color: var(--danger); }
+.connection-status .connecting { color: var(--warning); }
+
+.connection-status.offline {
+  animation: shake 0.4s ease-in-out 2;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+
+/* ===============================
+   Table (Desktop)
+=============================== */
 .table-wrapper {
   background: var(--glass);
-  border-radius: 18px;
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
   border: 1px solid var(--border);
   overflow-x: auto;
 }
@@ -48,235 +123,232 @@ body {
 
 .cashier-table th,
 .cashier-table td {
-  padding: 14px;
+  padding: 16px;
   text-align: right;
+  font-size: 0.95rem;
 }
 
 .cashier-table thead {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.45);
 }
 
 .cashier-table tbody tr {
   border-bottom: 1px solid var(--border);
+  transition: background 0.25s ease, transform 0.15s ease;
 }
 
-.order-id {
-  font-weight: 900;
-  color: #ffd166;
+.cashier-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.06);
 }
 
+/* ===============================
+   Rows States
+=============================== */
+.row-active { background: rgba(0, 0, 0, 0.35); }
+.row-done { background: rgba(34, 197, 94, 0.18); opacity: 0.8; }
+
+.row-new {
+  animation: pulseNew 1.5s ease-in-out infinite;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 209, 102, 0.25),
+    rgba(255, 209, 102, 0.1)
+  );
+}
+
+@keyframes pulseNew {
+  0% { box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 209, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 209, 102, 0); }
+}
+
+/* ===============================
+   Order Info
+=============================== */
 .order-price {
   font-weight: 900;
   color: #ffd166;
+  font-size: 1rem;
 }
 
-.order-items {
-  font-size: 0.85rem;
-}
+.order-items { font-size: 0.95rem; }
 
-.item-row {
-  display: flex;
-  justify-content: space-between;
+.item-row.with-image {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
   border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
-  padding: 3px 0;
 }
 
-.qty {
-  font-weight: 800;
-  color: #ffd166;
+.item-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.muted {
-  color: var(--muted);
-  font-size: 0.85rem;
-}
+.qty { font-weight: 800; color: #ffd166; font-size: 0.9rem; }
 
-.small {
-  font-size: 0.75rem;
-}
+.muted { color: var(--muted); font-size: 0.9rem; }
+.small { font-size: 0.8rem; }
 
-/* ===== Cards ===== */
-
+/* ===============================
+   Cards (Mobile)
+=============================== */
 .order-card {
-  background: var(--glass);
+  background: var(--glass-soft);
+  backdrop-filter: blur(12px);
   border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 16px;
-  margin-bottom: 14px;
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 18px;
+  transition: transform 0.15s ease;
+}
+
+.order-card:hover { transform: translateY(-2px); }
+
+.order-card-new {
+  border: 2px solid #ffd166;
+  box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.25);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
+  font-size: 1rem;
 }
 
-.card-meta {
-  font-size: 0.8rem;
-  margin: 6px 0;
-  color: var(--muted);
-}
-
-/* ===== Buttons ===== */
-
-.btn-finish {
-  background: linear-gradient(180deg, #ffd166, #fca311);
-  border: none;
-  border-radius: 12px;
-  padding: 8px 18px;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.btn-finish.full {
-  width: 100%;
-  margin-top: 10px;
-}
-
-.btn-cancel {
-  flex: 1;
-  background: #374151;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 10px;
-}
-
-.btn-confirm {
-  flex: 1;
-  background: linear-gradient(180deg, #4ade80, #22c55e);
-  border: none;
-  border-radius: 12px;
-  padding: 10px;
-  font-weight: 900;
-}
-
-/* ===== Modal ===== */
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-box {
-  background: #1a0f05;
-  border-radius: 18px;
-  padding: 22px;
-  width: 320px;
-}
-
-.modal-title {
-  color: #ffd166;
-  font-weight: 900;
-}
-
-.modal-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 16px;
-}
-
-/* ===== States ===== */
-
-.row-active {
-  background: rgba(0, 0, 0, 0.25);
-}
-
-.row-done {
-  background: rgba(34, 197, 94, 0.2);
-}
-
-.done-label {
-  font-weight: 900;
-  color: var(--success);
-}
-
-/* ===== Animations ===== */
-
-.animate-row {
-  animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ===== Responsive ===== */
-
-.desktop-only {
-  display: none;
-}
-
-.mobile-only {
-  display: block;
-}
-
-@media (min-width: 768px) {
-  .desktop-only {
-    display: block;
-  }
-  .mobile-only {
-    display: none;
-  }
-}
-
-.item-row.with-image {
-  display: grid;
-  grid-template-columns: 42px 1fr auto;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 0;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
-}
-
-.item-img {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  object-fit: cover;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
 .card-meta {
   display: flex;
   gap: 6px;
   align-items: center;
-}
-.cashier-container {
-  height: 100vh;   /* أو min-height */
-  overflow-y: auto;
-}
-
-/* Highlight الطلب الجديد */
-.row-new {
-  animation: popIn 0.5s ease-out forwards;
-  background: rgba(255, 200, 0, 0.3);
+  font-size: 0.9rem;
+  margin: 6px 0;
+  color: var(--muted);
 }
 
-.order-card-new {
-  animation: popIn 0.5s ease-out forwards;
-  border: 1px solid #ffd166;
+/* ===============================
+   Buttons
+=============================== */
+.btn-finish {
+  background: linear-gradient(180deg, #ffd166, #fca311);
+  border: none;
+  border-radius: 14px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-@keyframes popIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.95) translateY(-10px);
-  }
-  50% {
-    transform: scale(1.05) translateY(0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+.btn-finish:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.btn-finish.full { width: 100%; margin-top: 10px; }
+
+.btn-cancel { flex: 1; padding: 12px; font-size: 0.95rem; }
+.btn-confirm { flex: 1; padding: 12px; font-size: 0.95rem; }
+
+/* ===============================
+   Done Label
+=============================== */
+.done-label {
+  background: rgba(34, 197, 94, 0.2);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: var(--success);
+}
+
+/* ===============================
+   Modal
+=============================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.modal-box {
+  background: linear-gradient(180deg, #1f1305, #120b03);
+  border-radius: 22px;
+  padding: 28px;
+  width: 340px;
+  border: 1px solid var(--border);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+}
+
+.modal-title { font-weight: 900; color: #ffd166; font-size: 1.2rem; }
+
+/* ===============================
+   Responsive
+=============================== */
+.desktop-only { display: none; }
+.mobile-only { display: block; }
+
+@media (min-width: 768px) {
+  .desktop-only { display: block; }
+  .mobile-only { display: none; }
+}
+/* ===============================
+   Responsive Typography
+=============================== */
+
+/* Base font sizes */
+.cashier-title { font-size: 2rem; }
+.cashier-table th, .cashier-table td { font-size: 0.95rem; }
+.order-items { font-size: 0.95rem; }
+.card-header { font-size: 1rem; }
+.card-meta { font-size: 0.9rem; }
+.btn-finish { font-size: 1rem; }
+.btn-cancel, .btn-confirm { font-size: 0.95rem; }
+.done-label { font-size: 0.85rem; }
+.connection-status { font-size: 0.85rem; }
+
+/* Medium screens (tablets, 768px - 1024px) */
+@media (min-width: 768px) {
+  .cashier-title { font-size: 2.2rem; }
+  .cashier-table th, .cashier-table td { font-size: 1rem; }
+  .order-items { font-size: 1rem; }
+  .card-header { font-size: 1.1rem; }
+  .card-meta { font-size: 0.95rem; }
+  .btn-finish { font-size: 1.05rem; }
+  .btn-cancel, .btn-confirm { font-size: 1rem; }
+  .done-label { font-size: 0.9rem; }
+  .connection-status { font-size: 0.9rem; }
+}
+
+/* Large screens (1024px - 1440px) */
+@media (min-width: 1024px) {
+  .cashier-title { font-size: 2.5rem; }
+  .cashier-table th, .cashier-table td { font-size: 1.05rem; }
+  .order-items { font-size: 1.05rem; }
+  .card-header { font-size: 1.2rem; }
+  .card-meta { font-size: 1rem; }
+  .btn-finish { font-size: 1.1rem; }
+  .btn-cancel, .btn-confirm { font-size: 1.05rem; }
+  .done-label { font-size: 0.95rem; }
+  .connection-status { font-size: 0.95rem; }
+}
+
+/* Extra large screens (>1440px, e.g. big POS monitors) */
+@media (min-width: 1440px) {
+  .cashier-title { font-size: 3rem; }
+  .cashier-table th, .cashier-table td { font-size: 1.2rem; }
+  .order-items { font-size: 1.15rem; }
+  .card-header { font-size: 1.3rem; }
+  .card-meta { font-size: 1.1rem; }
+  .btn-finish { font-size: 1.2rem; }
+  .btn-cancel, .btn-confirm { font-size: 1.15rem; }
+  .done-label { font-size: 1rem; }
+  .connection-status { font-size: 1rem; }
 }

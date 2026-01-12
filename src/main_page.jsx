@@ -1,3 +1,4 @@
+// Main_page (محدّث مع حد 99 للعناصر الإجمالية)
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -70,26 +71,75 @@ const Main_page = ({
       });
   }, []);
 
-  /* ======= دوال السلة ======= */
+  /* ======= دوال السلة (محدّثة لحد 99) ======= */
+
+  // الحد الأقصى الإجمالي للعناصر في السلة
+  const CART_MAX_QTY = 99;
+
+  const getCartTotalQty = (cartArray) =>
+    (cartArray || []).reduce((s, i) => s + (i.qty || 0), 0);
+
   const addToCart = (meal) => {
     setCart(prev => {
+      // حساب الكمية الكلية الحالية
+      const totalQty = getCartTotalQty(prev);
+
+      // تأكد أن إضافة عنصر واحد لن تتجاوز الحد
+      if (totalQty + 1 > CART_MAX_QTY) {
+        toast.warn(`لا يمكنك إضافة أكثر من ${CART_MAX_QTY} وجبة في السلة`);
+        return prev;
+      }
+
       const found = prev.find(i => i.id === meal.id);
       if (found) {
-        return prev.map(i => i.id === meal.id ? { ...i, qty: i.qty + 1 } : i);
+        // لو العنصر موجود، تأكد أن كمية هذا العنصر لن تتجاوز 99
+        if ((found.qty || 0) + 1 > CART_MAX_QTY) {
+          toast.warn(`الحد الأقصى لكمية هذا المنتج هو ${CART_MAX_QTY}`);
+          return prev;
+        }
+        // بالإضافة، تحقق من الحد الإجمالي (أعد الحساب لأن found.qty ستزداد)
+        if (totalQty + 1 > CART_MAX_QTY) {
+          toast.warn(`لا يمكنك إضافة أكثر من ${CART_MAX_QTY} وجبة في السلة`);
+          return prev;
+        }
+
+        return prev.map(i => i.id === meal.id ? { ...i, qty: (i.qty || 0) + 1 } : i);
       }
-      return [...prev, { 
+
+      // عنصر جديد: أضف فقط إذا لا يتجاوز الحد
+      const newItem = { 
         id: meal.id, 
         name: meal.name || meal.title || 'بدون اسم', 
         price: Number(meal.price || meal.price_value || 0), 
         qty: 1, 
         img: meal.image || meal.img || '/pngegg.avif' 
-      }];
+      };
+      return [...prev, newItem];
     });
   };
 
   const incQty = (id) => {
-    setCart(prev => prev.map(i => i.id === id ? { ...i, qty: i.qty + 1 } : i));
+    setCart(prev => {
+      const totalQty = getCartTotalQty(prev);
+      const item = prev.find(i => i.id === id);
+      if (!item) return prev;
+
+      // لو زيادة وحدة واحدة تتجاوز الحد الإجمالي => منع
+      if (totalQty + 1 > CART_MAX_QTY) {
+        toast.warn(`لا يمكنك إضافة أكثر من ${CART_MAX_QTY} وجبة في السلة`);
+        return prev;
+      }
+
+      // لو كمية هذا العنصر ستتجاوز 99 => منع
+      if ((item.qty || 0) + 1 > CART_MAX_QTY) {
+        toast.warn(`الحد الأقصى لكمية هذا المنتج هو ${CART_MAX_QTY}`);
+        return prev;
+      }
+
+      return prev.map(i => i.id === id ? { ...i, qty: (i.qty || 0) + 1 } : i);
+    });
   };
+
   const decQty = (id) => {
     setCart(prev => {
       const item = prev.find(i => i.id === id);

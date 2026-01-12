@@ -154,8 +154,9 @@ font-size: 0.8rem;
 
 /* 🔧 توحيد أبعاد اللوغو فقط */
 .logo img {
+  padding-top: 10px;
   width: 30vh;
-  height: 17vh;
+  height: 20vh;
   display: block;
   pointer-events: none;
 }
@@ -164,7 +165,7 @@ font-size: 0.8rem;
 .gn-navbar {
   position: relative;
   width: 100% !important;
-  padding: 10px;
+  padding: 5px;
   background-color: #1C1C1C !important;
   box-sizing: border-box;
 }
@@ -721,11 +722,7 @@ direction: rtl;
   cursor: pointer;
   font-weight: 800;
 }
-.btn-cancel {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.06);
-  color: #e6ceb4;
-}
+
 .btn-order {
   background: linear-gradient(135deg,#FFB703,#F77F00);
   color: #14110f;
@@ -888,8 +885,9 @@ direction: rtl;
 }
 
 .btn-cancel{
-  background: #444;
-  color: #fff;
+  background: #1F1A17 !important;
+  color: #e6ceb4 !important;
+  border: #e6ceb4 !important;
 }
 
 .btn-order{
@@ -1040,4 +1038,34 @@ button[disabled],
 
 .Toastify__toast-container {
   z-index: 20000 !important;
+}
+
+
+
+.Add_Store_Btn:hover,
+.btn-order:hover,
+.btn-cancel:hover,
+.checkout-confirm:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35); /* ظل أعمق وأنيق */
+  transform: translateY(-2px);                /* رفع خفيف */
+  color: #14110f;                             /* نص داكن على التدرج */
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* عند الضغط */
+.Add_Store_Btn:active ,.btn-order:active ,.btn-cancel:active,.checkout-confirm:active{
+  transform: scale(0.97);       /* يعطي إحساس ضغط خفيف */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* أيقونة + داخل الزر */
+.add_op_Text img {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+/* عند hover على الزر، نجعل + يلمع قليلاً */
+.Add_Store_Btn:hover .add_op_Text img {
+  transform: scale(1.1);
 }
