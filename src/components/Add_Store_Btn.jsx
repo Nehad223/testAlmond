@@ -1,5 +1,4 @@
 import React from 'react';
-
 const Add_Store_Btn = ({ meal, onAddToCart }) => {
   return (
     <div>
@@ -9,7 +8,7 @@ const Add_Store_Btn = ({ meal, onAddToCart }) => {
         aria-label="إضافة إلى السلة"
       >
         <span>
-          <img className='add_op_Text' src='/plus.webp' alt="+" />
+          <img className='add_op_Text' src='/plus.webp' fetchPriority="high"  alt="+" />
         </span>
         <span className='add_Text'> اضف </span>
         <span className='ToStore_Text'>الى السلة</span>
@@ -19,5 +18,4 @@ const Add_Store_Btn = ({ meal, onAddToCart }) => {
 };
 
 export default Add_Store_Btn;
-
 

@@ -5,9 +5,18 @@ export default function CashierPage() {
   const [orders, setOrders] = useState([]);
   const [pendingId, setPendingId] = useState(null);
   const [newOrderId, setNewOrderId] = useState(null);
-
-  const [socketStatus, setSocketStatus] = useState("connecting"); 
+    const [deleteId, setDeleteId] = useState(null);
+  const [socketStatus, setSocketStatus] = useState("connecting");
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  // permission states
+  const initialPermissionGranted =
+    typeof Notification !== "undefined" && Notification.permission === "granted";
+  const initialPermissionDenied =
+    typeof Notification !== "undefined" && Notification.permission === "denied";
+
+  const [permissionGranted, setPermissionGranted] = useState(initialPermissionGranted);
+  const [permissionDenied, setPermissionDenied] = useState(initialPermissionDenied);
 
   const audioRef = useRef(null);
   const socketRef = useRef(null);
@@ -17,6 +26,19 @@ export default function CashierPage() {
   const lastIdRef = useRef(null);
   const pendingPatchesRef = useRef([]);
 
+  const requestDelete = (order) => {
+    if (order.state !== "finish") return;
+    setDeleteId(order.id);
+  };
+
+  const confirmDelete = () => {
+    const id = deleteId;
+    setOrders((prev) => prev.filter((o) => o.id !== id));
+    fetch(`https://snackalmond.duckdns.org/details/${id}/`, {
+      method: "DELETE",
+    }).catch(console.error);
+    setDeleteId(null);
+  };
   // -----------------------------
   // Helpers: date filtering
   // -----------------------------
@@ -94,14 +116,33 @@ export default function CashierPage() {
           const merged = sortOrders(Array.from(map.values()));
 
           // ----------------------
-          // Play sound for missed orders
+          // Play sound & notify for missed orders (only if permission given)
           // ----------------------
-          const existingIds = new Set(filterToLastDays(prev, 2).map(o => o.id));
-          const missed = merged.filter(o => !existingIds.has(o.id));
+          const existingIds = new Set(filterToLastDays(prev, 2).map((o) => o.id));
+          const missed = merged.filter((o) => !existingIds.has(o.id));
           if (missed.length > 0) {
-            audioRef.current?.play();
-            setNewOrderId(missed[0].id);
-            setTimeout(() => setNewOrderId(null), 3000);
+            if (permissionGranted) {
+              audioRef.current?.play().catch((e) => {
+                console.warn("Audio play failed:", e);
+              });
+              setTimeout(() => {
+                // send browser notification if available
+                try {
+                  if (typeof Notification !== "undefined" && Notification.permission === "granted") {
+                    new Notification("طلب جديد", {
+                      body: `طلب من ${missed[0].name} — ${missed[0].total_price} ل.س`,
+                    });
+                  }
+                } catch (e) {
+                  console.error("Notification error:", e);
+                }
+              }, 100);
+              setNewOrderId(missed[0].id);
+              setTimeout(() => setNewOrderId(null), 3000);
+            } else {
+              // permission not granted — don't play sound or notify
+              console.log("Missed orders but permission not granted; skipping sound/notification");
+            }
           }
 
           return merged;
@@ -136,7 +177,25 @@ export default function CashierPage() {
           } else {
             if (!isSyncingRef.current) {
               setNewOrderId(order.id);
-              audioRef.current?.play();
+
+              if (permissionGranted) {
+                audioRef.current?.play().catch((e) => {
+                  console.warn("Audio play failed:", e);
+                });
+
+                try {
+                  if (typeof Notification !== "undefined" && Notification.permission === "granted") {
+                    new Notification("طلب جديد", {
+                      body: `طلب من ${order.name} — ${order.total_price} ل.س`,
+                    });
+                  }
+                } catch (e) {
+                  console.error("Notification error:", e);
+                }
+              } else {
+                console.log("Incoming order but permission not granted; skipping sound/notification");
+              }
+
               setTimeout(() => setNewOrderId(null), 3000);
             }
             return sortOrders([order, ...cleanedPrev]);
@@ -165,7 +224,9 @@ export default function CashierPage() {
   // Initial load
   // ===============================
   useEffect(() => {
+    // prepare audio object
     audioRef.current = new Audio("/Orders_up.mp3");
+    audioRef.current.preload = "auto";
 
     fetch("https://snackalmond.duckdns.org/orders/")
       .then((res) => res.json())
@@ -181,6 +242,7 @@ export default function CashierPage() {
       socketRef.current?.close();
       clearTimeout(reconnectTimeoutRef.current);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ===============================
@@ -260,6 +322,54 @@ export default function CashierPage() {
   };
 
   // ===============================
+  // Permission handling (mandatory)
+  // ===============================
+  const handleRequestPermission = async () => {
+    if (typeof Notification === "undefined") {
+      alert("المتصفح يلي عم تستخدمه ما بيدعم إشعارات الويب.");
+      return;
+    }
+
+    try {
+      const perm = await Notification.requestPermission();
+      if (perm === "granted") {
+        setPermissionGranted(true);
+        setPermissionDenied(false);
+
+        // play a short test sound (user gesture allowed)
+        audioRef.current?.play().catch((e) => {
+          console.warn("Test audio play failed:", e);
+        });
+
+        // send a test notification
+        try {
+          if (typeof Notification !== "undefined" && Notification.permission === "granted") {
+            new Notification("تم تفعيل الإشعارات", { body: "الإشعارات الصوتية مفعلة الآن." });
+          }
+        } catch (e) {
+          console.error("Notification creation failed:", e);
+        }
+      } else if (perm === "denied") {
+        setPermissionDenied(true);
+        setPermissionGranted(false);
+      } else {
+        // default / dismissed
+        setPermissionGranted(false);
+        setPermissionDenied(false);
+      }
+    } catch (e) {
+      console.error("Permission request error:", e);
+    }
+  };
+
+  // If user previously denied, show note how to enable
+  const openSettingsHint = () => {
+    alert(
+      "إذا رفضت السماحية قبلًا، فعلها من إعدادات المتصفح لصفحة الموقع (Site settings -> Notifications)."
+    );
+  };
+
+  // ===============================
   // UI
   // ===============================
   return (
@@ -313,9 +423,22 @@ export default function CashierPage() {
                 <td className="order-price">{order.total_price} ل.س</td>
                 <td>
                   {order.state !== "finish" ? (
-                    <button className="btn-finish" onClick={() => requestFinish(order.id)}>إنهاء</button>
+                    <button
+                      className="btn-finish"
+                      onClick={() => requestFinish(order.id)}
+                    >
+                      إنهاء
+                    </button>
                   ) : (
-                    <span className="done-label">منتهي</span>
+                    <div className="action-buttons">
+                      <span className="done-label">منتهي</span>
+                      <button
+                        className="btn-delete"
+                        onClick={() => requestDelete(order)}
+                      >
+                        حذف
+                      </button>
+                    </div>
                   )}
                 </td>
               </tr>
@@ -343,11 +466,25 @@ export default function CashierPage() {
                 </div>
               ))}
             </div>
-            {order.state !== "finish" ? (
-              <button className="btn-finish full" onClick={() => requestFinish(order.id)}>إنهاء الطلب</button>
-            ) : (
-              <div className="done-label">تم الإنهاء</div>
-            )}
+{order.state !== "finish" ? (
+  <button
+    className="btn-finish full"
+    onClick={() => requestFinish(order.id)}
+  >
+    إنهاء الطلب
+  </button>
+) : (
+  <div className="action-buttons">
+    <span className="done-label">منتهي</span>
+    <button
+      className="btn-delete full"
+      onClick={() => requestDelete(order)}
+    >
+      حذف الطلب
+    </button>
+  </div>
+)}
+
           </div>
         ))}
       </div>
@@ -364,6 +501,66 @@ export default function CashierPage() {
           </div>
         </div>
       )}
+
+      {/* Mandatory permission overlay: re-uses modal-overlay/modal-box styles so it blocks UI */}
+      {!permissionGranted && (
+        <div className="modal-overlay" style={{ zIndex: 9999 }}>
+          <div className="modal-box">
+<h3 className="modal-title">تنبيه هام — الإشعارات الصوتية مطلوبة</h3>
+<p className="muted">
+  لضمان استقبال تنبيهات الطلبات وتشغيل الأصوات الخاصة بها، يجب السماح بالإشعارات من المتصفح.
+  يرجى الضغط على زر «طلب الإذن» للموافقة على ذلك. لا يمكن متابعة العمل قبل تفعيل الإشعارات.
+</p>
+
+            <div className="modal-actions">
+              <button
+                className="btn-confirm"
+                onClick={handleRequestPermission}
+              >
+                اطلب السماح
+              </button>
+            </div>
+
+            {permissionDenied && (
+              <div style={{ marginTop: 12 }}>
+                <p className="muted small">
+                  إذا رفضت السماحية قبلًا، شغّلها من إعدادات المتصفح (Site settings → Notifications).
+                </p>
+                <div className="modal-actions">
+                  <button className="btn-cancel" onClick={openSettingsHint}>كيف أفعلها؟</button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+      {deleteId && (
+  <div className="modal-overlay">
+    <div className="modal-box">
+      <h3 className="modal-title danger">تأكيد الحذف</h3>
+      <p className="muted">
+        هل أنت متأكد أنك تريد حذف هذا الطلب نهائيًا؟
+      </p>
+      <div className="modal-actions">
+        <button
+          className="btn-cancel"
+          onClick={() => setDeleteId(null)}
+        >
+          لا
+        </button>
+        <button
+          className="btn-delete confirm"
+          onClick={confirmDelete}
+        >
+          نعم، احذف
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }
+
+

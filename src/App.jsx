@@ -10,6 +10,7 @@ import ProtectedRoute from './admin//components/ProtectedRoute';
 import EditPage from './admin/components/Edit';
 import AdminLogin2 from './admin/login2/page';
 import CashierPage from './Cashier/CashierPage';
+import ProtectedCashier from './admin/components/ProtectedCashier';
 
 function App() {
   return (
@@ -26,11 +27,8 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Main_page />} />
-
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/login2" element={<AdminLogin2 />} />
-<Route path='cashier' element={<CashierPage/>} />
-
 
         <Route
           path="/admin"
@@ -50,10 +48,20 @@ function App() {
 
           }
         />
-        
+<Route
+  path="/cashier"
+  element={
+    <ProtectedCashier>
+      <CashierPage />
+    </ProtectedCashier>
+  }
+/>
+
+
       </Routes>
     </div>
   )
 }
 
 export default App;
+

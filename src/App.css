@@ -260,41 +260,42 @@ button::-moz-focus-inner { border: 0; }
   max-width: 1200px;
   display: grid;
   grid-template-columns: repeat(2, 1fr) !important;
-  gap: 15px;
+  gap: 7px;
   box-sizing: border-box;
   direction: rtl;
 }
-.add_op_Text{
-  width: 20px !important;
+
+
+.add_op_Text {
+  display: inline-flex;
+  align-items: center;
+  font-size: 15px !important;
+  justify-content: center;
+  width: 20px;
   height: 20px;
   font-weight: 700;
   background-color: #F39C12;
-  text-align: center;
-  margin-left: 5px;
-  border: solid 1px #F39C12;
   border-radius: 4px;
+  color: #000;
 }
+
+
+.add_op_Text {
+  display: inline-block;
+}
+
 .ToStore_Text{
   color: #E6CEB4;
 }
 .add_Text{
   color: #F39C12;
 }
-.Add_Store_Btn{
-  text-align: center;
-margin-top: auto;
-  border: solid 1px #F39C12;
-  background-color: transparent;
-  width: 90%;
-  border-radius: 10px;
-  height: 40px;
 
-}
 
 .Card_Slider {
   display: flex;
 flex-direction: column;
-  height: 100%;   /* أهم سطر */
+  height: 100%;  
   background-color: #1A1A22 !important;
    border-radius: 10px;
    border: 1px solid rgba(255,255,255,0.04);
@@ -431,12 +432,12 @@ flex-direction: column;
     padding-top: 10px !important;
   }
   .Card_Slider .info {
-    height: 125px; /* نفس ما عندك قبل */
+    height: 140px; /* نفس ما عندك قبل */
     padding-top: 5px;
     padding-bottom: 15px;
   }
     .Card_Slider .info h1{
-    font-size: 0.7rem !important;
+    font-size: 0.9rem !important;
   }
 }
 
@@ -469,6 +470,7 @@ max-width: 1200px;
   object-fit:fill;
 
 }
+
     .content-wrap{
     padding-top: 20px !important;
   }
@@ -481,7 +483,7 @@ max-width: 1200px;
     font-size: 1.1rem !important;
   }
     .Cards{
-  grid-template-columns: repeat(6, 1fr) !important;
+  grid-template-columns: repeat(5, 1fr) !important;
 max-width: 1600px;
 direction: rtl;
   }
@@ -1060,12 +1062,6 @@ button[disabled],
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-/* أيقونة + داخل الزر */
-.add_op_Text img {
-  width: 20px;
-  height: 20px;
-  transition: transform 0.2s ease;
-}
 
 /* عند hover على الزر، نجعل + يلمع قليلاً */
 .Add_Store_Btn:hover .add_op_Text img {
@@ -1155,4 +1151,50 @@ button[disabled],
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+}
+.Add_Store_Btn{
+  text-align: center;
+margin-top: auto;
+  border: solid 1px #F39C12;
+  background-color: transparent;
+  width: 90%;
+  border-radius: 10px;
+  height: 40px;
+
+}
+.add_op_Text{
+  width: 20px !important;
+  height: 20px;
+  font-weight: 700;
+  background-color: #F39C12;
+  text-align: center;
+  margin-left: 5px;
+  border: solid 1px #F39C12;
+  border-radius: 4px;
+}
+.ToStore_Text{
+  color: #E6CEB4;
+}
+.add_Text{
+  color: #F39C12;
+}
+/* الافتراضي (موبايل/تابلت صغير) يبقى كما عندك */
+.img-wrapper {
+  height: 15vh; /* أو القيمة اللي تستخدمها حالياً */
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+}
+
+/* على ديسكتوب — زد الطول */
+@media (min-width: 1000px) {
+  .img-wrapper {
+    height: clamp(180px, 10vh, 270px); /* قيمة مرنة تناسب أحجام الشاشات */
+  }
+}
+
+/* تأكد إن الصورة تغطي المساحة بدون تشويه */
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* مهم: يحافظ على العرض والقص بطريقة جميلة */
 }

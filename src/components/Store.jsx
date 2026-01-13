@@ -4,7 +4,7 @@ const Store = ({ count = 0, onToggle = () => {} }) => {
   return (
     <div className='store' role="button" onClick={onToggle} aria-label="افتح السلة">
       <div className='store-inner'>
-        <img src='/pngegg.avif' alt="cart" />
+        <img src='/pngegg.avif' alt="cart"   fetchPriority="high"   />
         <span aria-live="polite">{count}</span>
       </div>
     </div>

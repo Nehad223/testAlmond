@@ -20,7 +20,12 @@ export default function AdminLogin() {
         setError(data.error || "Login failed");
       } else {
         sessionStorage.setItem("token", data.token);
-        window.location.href = "/admin";
+        
+        sessionStorage.setItem("type", data.userType);
+
+        if(data.userType=="admin"){ window.location.href = "/admin";}
+        else if(data.userType=="cashier"){window.location.href = "/cashier";}
+       
       }
     } catch (err) {
       setError("Server error");

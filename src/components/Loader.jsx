@@ -7,7 +7,7 @@ const Loader = () => {
   src="/logo.webp"
   alt="Loading"
   className="loader-logo"
-  fetchpriority="high"
+  fetchPriority="high"
   decoding="async"
 />
 
@@ -20,3 +20,4 @@ Developed by NovaTech
 };
 
 export default Loader;
+

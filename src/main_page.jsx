@@ -24,9 +24,6 @@ const Main_page = ({
 
   useEffect(() => {
     const criticalImages = [
-      "/logo.webp",
-      "/pngegg.avif",
-      "/plus.webp",
       "/name.webp",
       "/location.webp",
       "/phone.webp",
