@@ -460,7 +460,7 @@ export default function CashierPage() {
             <div className="order-items">
               {order.items.map((i) => (
                 <div key={i.id} className="item-row with-image">
-                  <img src={i.meal.image_url} alt={i.meal.name} className="item-img" />
+                  <img src={i.meal.image_url  || "/exampel.jpg" } alt={i.meal.name} className="item-img" />
                   <span>{i.meal.name}</span>
                   <span className="qty">× {i.quantity}</span>
                 </div>
