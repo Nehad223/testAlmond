@@ -111,7 +111,6 @@ const CartDrawer = ({
 
     if (typeof clearCart === "function") {
       clearCart();
-      toast.success("تم إفراغ محتويات السلة");
       setShowClearConfirm(false);
     } else {
       toast.error("تعذر إفراغ السلة — الدالة clearCart غير متوفرة");
