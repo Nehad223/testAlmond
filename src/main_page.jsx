@@ -5,7 +5,6 @@ import Logo from "./components/Logo";
 import Navbar from "./components/Navbar";
 import Cards from "./components/Cards";
 import Loader from "./components/Loader.jsx";
-import Footer2 from './Footers/Footer2/Fotter2.jsx';
 import Store from "./components/Store.jsx";
 import CartDrawer from "./components/CartDrawer.jsx";
 
@@ -244,7 +243,6 @@ const Main_page = ({
         clearCart={clearCart}
       />
 
-      <Footer2/>
     </div>
   );
 };

@@ -13,7 +13,7 @@ const Loader = () => {
 
 
       <div className="loader-credit en">
-Developed by NovaTech
+Developed by Mj+
       </div>
     </div>
   );
