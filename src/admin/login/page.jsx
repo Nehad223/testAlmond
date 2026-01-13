@@ -24,7 +24,7 @@ export default function AdminLogin() {
         
         sessionStorage.setItem("type", data.userType);
 
-        if(data.userType=="admin"){ window.location.href = "/admin";}
+        if(data.userType=="almond"){ window.location.href = "/admin";}
         else if(data.userType=="cashier"){window.location.href = "/cashier";}
        
       }
