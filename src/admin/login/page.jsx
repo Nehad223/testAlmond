@@ -19,6 +19,7 @@ export default function AdminLogin() {
       if (!res.ok) {
         setError(data.error || "Login failed");
       } else {
+        console.log(data);
         sessionStorage.setItem("token", data.token);
         
         sessionStorage.setItem("type", data.userType);

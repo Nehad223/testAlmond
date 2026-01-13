@@ -16,3 +16,4 @@ const ProtectedCashier = ({ children }) => {
 };
 
 export default ProtectedCashier;
+
