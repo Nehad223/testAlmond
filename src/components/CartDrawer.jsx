@@ -168,8 +168,6 @@ const CartDrawer = ({
 
           <div className="footer-actions">
             <button className="btn btn-cancel" onClick={onCancel} disabled={isSending}>إلغاء</button>
-
-            {/* زر افراغ السلة المحترف */}
             <button
               className="btn btn-clear"
               onClick={() => setShowClearConfirm(true)}
@@ -177,7 +175,7 @@ const CartDrawer = ({
               aria-label="افراغ السلة"
               title="افراغ السلة"
             >
-              {/* أيقونة سلة مهملات صغيرة */}
+           
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden focusable="false" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3 6h18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -253,7 +251,6 @@ const CartDrawer = ({
         </div>
       )}
 
-      {/* Confirm clear modal */}
       {showClearConfirm && (
         <div className="clear-confirm-overlay" role="dialog" aria-modal="true" onClick={() => !isSending && setShowClearConfirm(false)}>
           <div className="clear-confirm-modal" onClick={(e) => e.stopPropagation()}>

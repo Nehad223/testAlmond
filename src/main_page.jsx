@@ -64,9 +64,6 @@ const Main_page = ({
       });
   }, []);
 
-  /* ======= دوال السلة (محدّثة لحد 99) ======= */
-
-  // الحد الأقصى الإجمالي للعناصر في السلة
   const CART_MAX_QTY = 99;
 
   const getCartTotalQty = (cartArray) =>
@@ -169,7 +166,6 @@ const handleOrder = () => {
     setCartOpen(false);
   };
 
-  /* ================= حذف فوري ================= */
   const handleDelete = async (mealId) => {
     if (!window.confirm("متأكد من الحذف؟")) return;
 
@@ -189,7 +185,6 @@ const handleOrder = () => {
     }
   };
 
-  /* ================= تعديل فوري ================= */
   const handleUpdate = async (mealId, updatedData) => {
     try {
       await onUpdate(mealId, updatedData);

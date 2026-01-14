@@ -181,7 +181,6 @@ export default function AdminPage() {
         إضافة وجبة
       </button>
 
-      {/* إضافة كاتيجوري */}
       {isCatModalOpen && (
         <div className="modal-overlay">
           <div className="modal-box">
@@ -209,7 +208,6 @@ export default function AdminPage() {
         </div>
       )}
 
-      {/* إضافة وجبة */}
       {isProdModalOpen && (
         <div className="modal-overlay">
           <div className="modal-box">

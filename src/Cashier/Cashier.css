@@ -1,9 +1,3 @@
-/* ===============================
-   Cashier CSS — Consolidated (no duplicates)
-   All original rules preserved, responsive tweaks, larger text for cashier.
-=============================== */
-
-/* ---------- Root Variables ---------- */
 :root{
   --orange-1: #ff7a18;
   --orange-2: #ff9f1c;
@@ -21,12 +15,10 @@
   --danger: #ef4444;
   --warning: #facc15;
 
-  /* sizes */
   --base-font: clamp(13px, 1.5vw, 15px);
   --lead-font: clamp(19px, 2.4vw, 23px);
   --title-lg: clamp(24px, 2.2vw, 30px);
 
-  /* item image size: default 48, small screens fallback to 42 */
   --item-img-size: 48px;
 
   --ui-radius: 14px;
@@ -35,13 +27,12 @@
   --pad-lg: 24px;
 }
 
-/* ---------- Global ---------- */
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;background:#120b03;font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; color:var(--text); font-size:var(--base-font); -webkit-font-smoothing:antialiased}
 a{color:inherit}
 button{font-family:inherit}
 
-/* ---------- Container / Scrollbar ---------- */
+
 .cashier-container{
   min-height:100svh; height:100vh;
   padding:var(--pad-lg);
@@ -57,17 +48,16 @@ button{font-family:inherit}
   border-radius:999px;
 }
 
-/* ---------- Title ---------- */
+
 .cashier-title{
   font-size:var(--title-lg);
   font-weight:900;
   margin:0 0 var(--pad-md) 0;
   letter-spacing:.5px;
   text-shadow:0 4px 20px rgba(0,0,0,.6);
-  text-transform:uppercase; /* easier to read at a glance */
+  text-transform:uppercase;
 }
 
-/* ---------- Connection status (fixed) ---------- */
 .connection-status{
   position:fixed;
   top:14px; right:24px;
@@ -90,7 +80,6 @@ button{font-family:inherit}
   0%{transform:translateX(0)}25%{transform:translateX(-3px)}50%{transform:translateX(3px)}75%{transform:translateX(-3px)}100%{transform:translateX(0)}
 }
 
-/* ---------- Card surface (shared) ---------- */
 .card-surface{
   background:var(--glass);
   backdrop-filter:blur(12px);
@@ -98,7 +87,6 @@ button{font-family:inherit}
   border:1px solid var(--border);
 }
 
-/* ---------- Table (Desktop) ---------- */
 .table-wrapper{
   background:var(--glass);
   backdrop-filter:blur(14px);
@@ -120,7 +108,7 @@ button{font-family:inherit}
 .cashier-table tbody tr{border-bottom:1px solid var(--border); transition:background .25s ease, transform .15s ease}
 .cashier-table tbody tr:hover{background:rgba(255,255,255,.06)}
 
-/* ---------- Row states ---------- */
+
 .row-active{background:rgba(0,0,0,.35)}
 .row-done{background:rgba(34,197,94,.18);opacity:.9}
 .row-new{
@@ -133,7 +121,7 @@ button{font-family:inherit}
   100%{box-shadow:0 0 0 0 rgba(255,209,102,0)}
 }
 
-/* ---------- Order Info / Item rows ---------- */
+
 .order-price{font-weight:900;color:#ffd166;font-size:1rem}
 .order-items{font-size:.95rem}
 .item-row.with-image{
@@ -154,12 +142,11 @@ button{font-family:inherit}
 .muted{color:var(--muted);font-size:.95rem}
 .small{font-size:.85rem}
 
-/* For very small screens, use slightly smaller item image (keeps original 42 fallback) */
 @media (max-width:420px){
   :root{--item-img-size:42px}
 }
 
-/* ---------- Mobile Cards ---------- */
+
 .order-card{
   background:var(--glass-soft); backdrop-filter:blur(12px);
   border-radius:20px; border:1px solid var(--border);
@@ -171,7 +158,6 @@ button{font-family:inherit}
 .card-header{display:flex;justify-content:space-between;align-items:center;font-weight:800;text-transform:uppercase}
 .card-meta{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:.9rem;margin-top:6px}
 
-/* ---------- Buttons ---------- */
 .btn-finish{
   background:linear-gradient(180deg,#ffd166,#fca311);
   border:none;border-radius:14px;padding:12px 24px;font-size:1rem;font-weight:900;cursor:pointer;
@@ -188,7 +174,6 @@ button{font-family:inherit}
   font-size:.9rem;font-weight:900;color:var(--success);text-transform:uppercase;
 }
 
-/* ---------- Modal ---------- */
 .modal-overlay{
   position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.75);z-index:10000;
 }
@@ -199,25 +184,22 @@ button{font-family:inherit}
 .modal-title{font-weight:900;color:#ffd166;font-size:1.1rem;text-transform:uppercase}
 .modal-actions{display:flex;gap:10px;margin-top:16px}
 
-/* ---------- Responsive visibility ---------- */
 .desktop-only{display:none}
 .mobile-only{display:block}
 @media (min-width:768px){
   .desktop-only{display:block}
   .mobile-only{display:none}
 
-  /* Slightly larger table spacing on wider screens */
+
   .cashier-table th,.cashier-table td{padding:18px 20px;font-size:1rem}
   .order-price{font-size:1.05rem}
 }
 
-/* Larger screen tweaks */
 @media (min-width:1200px){
   .cashier-container{padding:32px}
   .cashier-title{font-size:var(--title-lg)}
 }
 
-/* Reduce motion preference */
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
 }
@@ -273,11 +255,7 @@ button{font-family:inherit}
 .btn-delete.confirm{flex:1}
 
 .modal-title.danger{color:#ef4444}
-/* ===============================
-   BUTTON EFFECTS — Cashier
-=============================== */
 
-/* Base transition for all buttons */
 button{
   position: relative;
   overflow: hidden;
@@ -288,20 +266,19 @@ button{
     opacity .2s ease;
 }
 
-/* Hover effect */
+
 button:hover{
   transform: translateY(-2px) scale(1.03);
   filter: brightness(1.05);
   box-shadow: 0 8px 22px rgba(0,0,0,.35);
 }
 
-/* Active (press) */
 button:active{
   transform: translateY(0) scale(.97);
   box-shadow: 0 4px 10px rgba(0,0,0,.4) inset;
 }
 
-/* Disabled state */
+
 button:disabled{
   opacity: .45;
   cursor: not-allowed;
@@ -310,9 +287,7 @@ button:disabled{
   filter: grayscale(1);
 }
 
-/* ===============================
-   Ripple effect (CSS only)
-=============================== */
+
 button::after{
   content:"";
   position:absolute;
@@ -329,9 +304,6 @@ button:active::after{
   transition:0s;
 }
 
-/* ===============================
-   Primary Finish Button
-=============================== */
 .btn-finish{
   animation: finishPulse 2.2s ease-in-out infinite;
 }
@@ -342,17 +314,12 @@ button:active::after{
   100%{box-shadow:0 0 0 0 rgba(255,209,102,0)}
 }
 
-/* ===============================
-   Confirm Button (Green)
-=============================== */
 .btn-confirm:hover{
   box-shadow: 0 0 0 3px rgba(34,197,94,.35),
               0 10px 25px rgba(0,0,0,.45);
 }
 
-/* ===============================
-   Delete Button (Danger)
-=============================== */
+
 .btn-delete{
   box-shadow: 0 6px 14px rgba(239,68,68,.35);
 }
@@ -363,17 +330,12 @@ button:active::after{
               0 10px 28px rgba(0,0,0,.55);
 }
 
-/* ===============================
-   Cancel Button
-=============================== */
+
 .btn-cancel:hover{
   background:#4b5563;
   box-shadow:0 8px 20px rgba(0,0,0,.4);
 }
 
-/* ===============================
-   Reduced motion support
-=============================== */
 @media (prefers-reduced-motion:reduce){
   button,
   .btn-finish{
@@ -381,33 +343,30 @@ button:active::after{
     transition:none!important;
   }
 }
-/* ===============================
-   MOBILE BUTTON SIZE & TOUCH UX
-=============================== */
+
 @media (max-width: 767px){
 
-  /* Container spacing */
+
   .order-card .action-buttons{
     margin-top: 12px;
     gap: 12px;
     flex-direction: column;
   }
 
-  /* Base mobile button */
   .order-card button{
-    min-height: 54px;          /* touch friendly */
+    min-height: 54px;       
     font-size: 1.05rem;
     font-weight: 900;
     border-radius: 16px;
     letter-spacing: .6px;
   }
 
-  /* Finish button (mobile) */
+
   .order-card .btn-finish{
     padding: 14px 18px;
   }
 
-  /* Delete button (mobile emphasis) */
+
   .order-card .btn-delete{
     padding: 14px 18px;
     background: linear-gradient(180deg,#ff4d4d,#dc2626);
@@ -416,14 +375,13 @@ button:active::after{
       0 0 0 2px rgba(239,68,68,.25);
   }
 
-  /* Strong press feedback */
+ 
   .order-card .btn-delete:active{
     transform: scale(.95);
     box-shadow:
       0 4px 10px rgba(0,0,0,.6) inset;
   }
 
-  /* Full width safety */
   .order-card .btn-delete.full,
   .order-card .btn-finish.full{
     width: 100%;

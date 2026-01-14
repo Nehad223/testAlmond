@@ -502,7 +502,7 @@ export default function CashierPage() {
         </div>
       )}
 
-      {/* Mandatory permission overlay: re-uses modal-overlay/modal-box styles so it blocks UI */}
+      
       {!permissionGranted && (
         <div className="modal-overlay" style={{ zIndex: 9999 }}>
           <div className="modal-box">
