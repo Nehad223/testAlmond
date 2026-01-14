@@ -145,15 +145,25 @@ const Main_page = ({
   const cartCount = cart.reduce((s, i) => s + i.qty, 0);
   const cartTotal = cart.reduce((s, i) => s + (Number(i.price) * i.qty), 0);
 
-  const handleOrder = () => {
-    if (cart.length === 0) {
-      toast.info("السلة فارغة");
-      return;
-    }
-    toast.success("تم إرسال الطلب بنجاح!");
-    setCart([]);
-    setCartOpen(false);
-  };
+const handleOrder = () => {
+  if (cart.length === 0) {
+    const id = toast.info("السلة فارغة");
+    setTimeout(() => {
+      toast.dismiss(id);
+    }, 3000);
+    return;
+  }
+
+  const id = toast.success("تم إرسال الطلب بنجاح!");
+
+  setTimeout(() => {
+    toast.dismiss(id);
+  }, 3000);
+
+  setCart([]);
+  setCartOpen(false);
+};
+
 
   const handleCancel = () => {
     setCartOpen(false);

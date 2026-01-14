@@ -15,15 +15,19 @@ import ProtectedCashier from './admin/components/ProtectedCashier';
 function App() {
   return (
     <div>
-      <ToastContainer
-        position="top-center"
-        autoClose={2500}
-        hideProgressBar={false}
-        pauseOnHover
-        closeOnClick
-        draggable
-        theme="dark"
-      />
+<ToastContainer
+  position="top-center"
+  autoClose={2500}
+  hideProgressBar={false}
+  newestOnTop
+  closeOnClick
+  rtl
+  pauseOnFocusLoss={false}
+  pauseOnHover={false}
+  draggable={false}
+  theme="dark"
+/>
+
 
       <Routes>
         <Route path="/" element={<Main_page />} />
