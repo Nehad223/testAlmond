@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 import Logo from "./components/Logo";
@@ -8,178 +8,167 @@ import Loader from "./components/Loader.jsx";
 import Store from "./components/Store.jsx";
 import CartDrawer from "./components/CartDrawer.jsx";
 
+const CART_MAX_QTY = 99;
+
 const Main_page = ({
   isAdmin = false,
   onDelete,
   onUpdate,
 }) => {
   const [data, setData] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(null);
+  const [activeCategory, setActiveCategory] = useState(0);
   const [loading, setLoading] = useState(true);
   const [uiReady, setUiReady] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [cart, setCart] = useState([]);
+
+  const contentRef = useRef(null);
+
+  /* ===================== HELPERS ===================== */
   const clearCart = () => setCart([]);
 
+  const getCartTotalQty = (arr = []) =>
+    arr.reduce((s, i) => s + (i.qty || 0), 0);
+
+  /* ===================== FETCH DATA ===================== */
   useEffect(() => {
-    const criticalImages = [
-      "/name.webp",
-      "/location.webp",
-      "/phone.webp",
-    ];
+    const criticalImages = ["/name.webp", "/location.webp", "/phone.webp"];
+
+    const preloadImages = Promise.all(
+      criticalImages.map(src =>
+        new Promise(res => {
+          const img = new Image();
+          img.src = src;
+          const t = setTimeout(res, 2500);
+          img.onload = img.onerror = () => {
+            clearTimeout(t);
+            res();
+          };
+        })
+      )
+    );
 
     fetch("https://snackalmond.duckdns.org/home/")
       .then(res => res.json())
       .then(json => {
         setData(json);
         setActiveCategory(0);
-
-
-        Promise.all(
-          criticalImages.map(src =>
-            new Promise(res => {
-              const img = new Image();
-              img.src = src;
-
-              const timeout = setTimeout(res, 2500); // أمان
-
-              img.onload = () => {
-                clearTimeout(timeout);
-                res();
-              };
-              img.onerror = () => {
-                clearTimeout(timeout);
-                res();
-              };
-            })
-          )
-        ).then(() => {
-          setLoading(false);
-          setUiReady(true);
-        });
+        return preloadImages;
       })
-      .catch(() => {
+      .finally(() => {
         setLoading(false);
         setUiReady(true);
       });
   }, []);
 
-  const CART_MAX_QTY = 99;
+  /* ===================== RESET SCROLL ===================== */
+  useEffect(() => {
+    contentRef.current?.scrollTo({ top: 0, behavior: "auto" });
+  }, [activeCategory]);
 
-  const getCartTotalQty = (cartArray) =>
-    (cartArray || []).reduce((s, i) => s + (i.qty || 0), 0);
-
+  /* ===================== CART LOGIC ===================== */
   const addToCart = (meal) => {
-    setCart(prev => {
-      // حساب الكمية الكلية الحالية
-      const totalQty = getCartTotalQty(prev);
+    let added = true;
 
-      // تأكد أن إضافة عنصر واحد لن تتجاوز الحد
+    setCart(prev => {
+      const totalQty = getCartTotalQty(prev);
       if (totalQty + 1 > CART_MAX_QTY) {
-        toast.warn(`لا يمكنك إضافة أكثر من ${CART_MAX_QTY} وجبة في السلة`);
+        toast.warn(`لا يمكنك إضافة أكثر من ${CART_MAX_QTY} وجبة`);
+        added = false;
         return prev;
       }
 
       const found = prev.find(i => i.id === meal.id);
+
       if (found) {
-        // لو العنصر موجود، تأكد أن كمية هذا العنصر لن تتجاوز 99
-        if ((found.qty || 0) + 1 > CART_MAX_QTY) {
-          toast.warn(`الحد الأقصى لكمية هذا المنتج هو ${CART_MAX_QTY}`);
-          return prev;
-        }
-        // بالإضافة، تحقق من الحد الإجمالي (أعد الحساب لأن found.qty ستزداد)
-        if (totalQty + 1 > CART_MAX_QTY) {
-          toast.warn(`لا يمكنك إضافة أكثر من ${CART_MAX_QTY} وجبة في السلة`);
+        if (found.qty + 1 > CART_MAX_QTY) {
+          toast.warn(`الحد الأقصى لهذا المنتج هو ${CART_MAX_QTY}`);
+          added = false;
           return prev;
         }
 
-        return prev.map(i => i.id === meal.id ? { ...i, qty: (i.qty || 0) + 1 } : i);
+        return prev.map(i =>
+          i.id === meal.id ? { ...i, qty: i.qty + 1 } : i
+        );
       }
 
-      // عنصر جديد: أضف فقط إذا لا يتجاوز الحد
-      const newItem = { 
-        id: meal.id, 
-        name: meal.name || meal.title || 'بدون اسم', 
-        price: Number(meal.price || meal.price_value || 0), 
-        qty: 1, 
-        img: meal.image || meal.img || '/pngegg.avif' 
-      };
-      return [...prev, newItem];
+      return [
+        ...prev,
+        {
+          id: meal.id,
+          name: meal.name || meal.title || "بدون اسم",
+          price: Number(meal.price || meal.price_value || 0),
+          qty: 1,
+          img: meal.image || meal.img || "/pngegg.avif",
+        },
+      ];
     });
+
+    return added;
   };
 
-  const incQty = (id) => {
+  const incQty = (id) =>
     setCart(prev => {
       const totalQty = getCartTotalQty(prev);
       const item = prev.find(i => i.id === id);
       if (!item) return prev;
 
-      // لو زيادة وحدة واحدة تتجاوز الحد الإجمالي => منع
       if (totalQty + 1 > CART_MAX_QTY) {
-        toast.warn(`لا يمكنك إضافة أكثر من ${CART_MAX_QTY} وجبة في السلة`);
+        toast.warn(`لا يمكنك إضافة أكثر من ${CART_MAX_QTY} وجبة`);
         return prev;
       }
 
-      // لو كمية هذا العنصر ستتجاوز 99 => منع
-      if ((item.qty || 0) + 1 > CART_MAX_QTY) {
-        toast.warn(`الحد الأقصى لكمية هذا المنتج هو ${CART_MAX_QTY}`);
+      if (item.qty + 1 > CART_MAX_QTY) {
+        toast.warn(`الحد الأقصى لهذا المنتج هو ${CART_MAX_QTY}`);
         return prev;
       }
 
-      return prev.map(i => i.id === id ? { ...i, qty: (i.qty || 0) + 1 } : i);
+      return prev.map(i =>
+        i.id === id ? { ...i, qty: i.qty + 1 } : i
+      );
     });
-  };
 
-  const decQty = (id) => {
-    setCart(prev => {
-      const item = prev.find(i => i.id === id);
-      if (!item) return prev;
-      if (item.qty <= 1) return prev.filter(i => i.id !== id);
-      return prev.map(i => i.id === id ? { ...i, qty: i.qty - 1 } : i);
-    });
-  };
+  const decQty = (id) =>
+    setCart(prev =>
+      prev
+        .map(i =>
+          i.id === id ? { ...i, qty: i.qty - 1 } : i
+        )
+        .filter(i => i.qty > 0)
+    );
 
-  const cartCount = cart.reduce((s, i) => s + i.qty, 0);
-  const cartTotal = cart.reduce((s, i) => s + (Number(i.price) * i.qty), 0);
+  /* ===================== TOTALS ===================== */
+  const cartCount = getCartTotalQty(cart);
+  const cartTotal = cart.reduce(
+    (s, i) => s + i.qty * Number(i.price || 0),
+    0
+  );
 
-const handleOrder = () => {
-  if (cart.length === 0) {
-    const id = toast.info("السلة فارغة");
-    setTimeout(() => {
-      toast.dismiss(id);
-    }, 3000);
-    return;
-  }
+  /* ===================== ORDER ===================== */
+  const handleOrder = () => {
+    if (!cart.length) {
+      toast.info("السلة فارغة");
+      return;
+    }
 
-  const id = toast.success("تم إرسال الطلب بنجاح!");
-
-  setTimeout(() => {
-    toast.dismiss(id);
-  }, 3000);
-
-  setCart([]);
-  setCartOpen(false);
-};
-
-
-  const handleCancel = () => {
+    toast.success("تم إرسال الطلب بنجاح!");
+    clearCart();
     setCartOpen(false);
   };
 
+  /* ===================== ADMIN ACTIONS ===================== */
   const handleDelete = async (mealId) => {
     if (!window.confirm("متأكد من الحذف؟")) return;
 
     try {
       await onDelete(mealId);
-
-      setData((prev) =>
-        prev.map((cat) => ({
+      setData(prev =>
+        prev.map(cat => ({
           ...cat,
-          meals: cat.meals.filter((meal) => meal.id !== mealId),
+          meals: cat.meals.filter(m => m.id !== mealId),
         }))
       );
-
-      toast.success("تم حذف الوجبات");
+      toast.success("تم حذف الوجبة");
     } catch {
       toast.error("فشل الحذف");
     }
@@ -188,25 +177,23 @@ const handleOrder = () => {
   const handleUpdate = async (mealId, updatedData) => {
     try {
       await onUpdate(mealId, updatedData);
-
-      setData((prev) =>
-        prev.map((cat) => ({
+      setData(prev =>
+        prev.map(cat => ({
           ...cat,
-          meals: cat.meals.map((meal) =>
-            meal.id === mealId ? { ...meal, ...updatedData } : meal
+          meals: cat.meals.map(m =>
+            m.id === mealId ? { ...m, ...updatedData } : m
           ),
         }))
       );
-
       toast.success("تم تحديث الوجبة");
     } catch {
       toast.error("فشل التحديث");
     }
   };
 
-
   if (loading || !uiReady) return <Loader />;
 
+  /* ===================== RENDER ===================== */
   return (
     <div className="app">
       <header className="site-header">
@@ -221,15 +208,15 @@ const handleOrder = () => {
         </div>
       </header>
 
-      <main className="main-scroll">
-        <div className="content-wrap">
+      <main className="main-scroll" ref={contentRef}>
+        <div className="content-wrap" key={activeCategory}>
           {data?.[activeCategory]?.meals?.length > 0 && (
             <Cards
+              key={activeCategory}
               meals={data[activeCategory].meals}
               isAdmin={isAdmin}
               onDelete={handleDelete}
               onUpdateProduct={handleUpdate}
-              Categories={data}
               onAddToCart={addToCart}
             />
           )}
@@ -244,10 +231,9 @@ const handleOrder = () => {
         decQty={decQty}
         total={cartTotal}
         onOrder={handleOrder}
-        onCancel={handleCancel}
+        onCancel={() => setCartOpen(false)}
         clearCart={clearCart}
       />
-
     </div>
   );
 };

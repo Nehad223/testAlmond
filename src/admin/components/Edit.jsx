@@ -17,7 +17,7 @@ const EditPage = () => {
     Authorization: `Bearer ${adminToken}`,
   });
 
-  // حذف (API فقط)
+
   const deleteMeal = async (mealId) => {
     const res = await fetch(
       `https://snackalmond.duckdns.org/editmeal/${mealId}/`,
@@ -32,7 +32,6 @@ const EditPage = () => {
     }
   };
 
-  // تعديل (API فقط)
   const updateMeal = async (mealId, updatedData) => {
     const res = await fetch(
       `https://snackalmond.duckdns.org/editmeal/${mealId}/`,

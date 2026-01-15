@@ -125,7 +125,7 @@ const CartDrawer = ({
       <aside className={`cart-drawer ${open ? 'open' : ''}`} aria-hidden={!open}>
 
         <div className="cart-header">
-          <h3>السلة</h3>
+          <h3>توصيل الى المنزل</h3>
           <button className="close-btn" onClick={onClose} disabled={isSending} aria-label="إغلاق السلة">×</button>
         </div>
 
@@ -269,3 +269,4 @@ const CartDrawer = ({
 };
 
 export default CartDrawer;
+

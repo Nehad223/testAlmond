@@ -15,7 +15,7 @@ const Cards = ({ meals = [], isAdmin, onDelete, onUpdateProduct, onAddToCart }) 
             isAdmin={isAdmin}
             onDelete={onDelete}
             onUpdateProduct={onUpdateProduct}
-            onAddToCart={onAddToCart}  // ← لازم هون
+            onAddToCart={onAddToCart} 
           />
         </div>
       ))}

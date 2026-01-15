@@ -9,7 +9,6 @@ export default function CashierPage() {
   const [socketStatus, setSocketStatus] = useState("connecting");
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
-  // permission states
   const initialPermissionGranted =
     typeof Notification !== "undefined" && Notification.permission === "granted";
   const initialPermissionDenied =
@@ -39,9 +38,7 @@ export default function CashierPage() {
     }).catch(console.error);
     setDeleteId(null);
   };
-  // -----------------------------
-  // Helpers: date filtering
-  // -----------------------------
+
   const MS_PER_DAY = 24 * 60 * 60 * 1000;
   const isWithinLastDays = (dateString, days = 2) => {
     if (!dateString) return false;
@@ -64,9 +61,6 @@ export default function CashierPage() {
     return [...notFinished, ...finished];
   };
 
-  // ===============================
-  // Internet status
-  // ===============================
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
@@ -80,9 +74,7 @@ export default function CashierPage() {
     };
   }, []);
 
-  // ===============================
-  // WebSocket connection
-  // ===============================
+
   const connectSocket = () => {
     setSocketStatus("connecting");
 
@@ -96,7 +88,7 @@ export default function CashierPage() {
       isSyncingRef.current = true;
 
       try {
-        // fetch new orders since last ID
+
         const lastId = lastIdRef.current;
         const url = lastId
           ? `https://snackalmond.duckdns.org/orders/?since_id=${lastId}`
@@ -115,9 +107,7 @@ export default function CashierPage() {
 
           const merged = sortOrders(Array.from(map.values()));
 
-          // ----------------------
-          // Play sound & notify for missed orders (only if permission given)
-          // ----------------------
+
           const existingIds = new Set(filterToLastDays(prev, 2).map((o) => o.id));
           const missed = merged.filter((o) => !existingIds.has(o.id));
           if (missed.length > 0) {
@@ -126,7 +116,7 @@ export default function CashierPage() {
                 console.warn("Audio play failed:", e);
               });
               setTimeout(() => {
-                // send browser notification if available
+
                 try {
                   if (typeof Notification !== "undefined" && Notification.permission === "granted") {
                     new Notification("طلب جديد", {
@@ -140,7 +130,6 @@ export default function CashierPage() {
               setNewOrderId(missed[0].id);
               setTimeout(() => setNewOrderId(null), 3000);
             } else {
-              // permission not granted — don't play sound or notify
               console.log("Missed orders but permission not granted; skipping sound/notification");
             }
           }
@@ -155,9 +144,7 @@ export default function CashierPage() {
         }, 500);
       }
 
-      // =======================
-      // Flush pending PATCHes
-      // =======================
+
       flushPending();
     };
 
@@ -220,11 +207,8 @@ export default function CashierPage() {
     };
   };
 
-  // ===============================
-  // Initial load
-  // ===============================
   useEffect(() => {
-    // prepare audio object
+
     audioRef.current = new Audio("/Orders_up.mp3");
     audioRef.current.preload = "auto";
 
@@ -242,19 +226,12 @@ export default function CashierPage() {
       socketRef.current?.close();
       clearTimeout(reconnectTimeoutRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ===============================
-  // Update lastIdRef whenever orders change
-  // ===============================
   useEffect(() => {
     lastIdRef.current = orders[0]?.id ?? null;
   }, [orders]);
 
-  // ===============================
-  // Periodic cleanup
-  // ===============================
   useEffect(() => {
     const interval = setInterval(() => {
       setOrders((prev) => sortOrders(filterToLastDays(prev, 2)));
@@ -263,9 +240,6 @@ export default function CashierPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // ===============================
-  // Reload if disconnected too long
-  // ===============================
   useEffect(() => {
     if (socketStatus === "disconnected") {
       const t = setTimeout(() => {
@@ -276,9 +250,7 @@ export default function CashierPage() {
     }
   }, [socketStatus]);
 
-  // ===============================
-  // Finish order with offline queue
-  // ===============================
+
   const requestFinish = (id) => setPendingId(id);
 
   const confirmFinish = () => {
@@ -321,9 +293,7 @@ export default function CashierPage() {
     pendingPatchesRef.current = [];
   };
 
-  // ===============================
-  // Permission handling (mandatory)
-  // ===============================
+
   const handleRequestPermission = async () => {
     if (typeof Notification === "undefined") {
       alert("المتصفح يلي عم تستخدمه ما بيدعم إشعارات الويب.");
@@ -336,12 +306,10 @@ export default function CashierPage() {
         setPermissionGranted(true);
         setPermissionDenied(false);
 
-        // play a short test sound (user gesture allowed)
         audioRef.current?.play().catch((e) => {
           console.warn("Test audio play failed:", e);
         });
 
-        // send a test notification
         try {
           if (typeof Notification !== "undefined" && Notification.permission === "granted") {
             new Notification("تم تفعيل الإشعارات", { body: "الإشعارات الصوتية مفعلة الآن." });
@@ -353,7 +321,7 @@ export default function CashierPage() {
         setPermissionDenied(true);
         setPermissionGranted(false);
       } else {
-        // default / dismissed
+
         setPermissionGranted(false);
         setPermissionDenied(false);
       }
@@ -362,16 +330,13 @@ export default function CashierPage() {
     }
   };
 
-  // If user previously denied, show note how to enable
   const openSettingsHint = () => {
     alert(
       "إذا رفضت السماحية قبلًا، فعلها من إعدادات المتصفح لصفحة الموقع (Site settings -> Notifications)."
     );
   };
 
-  // ===============================
-  // UI
-  // ===============================
+
   return (
     <div className="cashier-container">
       <div className="connection-status">

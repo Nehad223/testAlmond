@@ -23,9 +23,7 @@ export default function AdminPage() {
   const widgetRef = useRef(null);
   const token = sessionStorage.getItem("token");
 
-  // =======================
-  // جلب الكاتيغوريس فقط
-  // =======================
+
   useEffect(() => {
     if (!token) return;
 
@@ -36,15 +34,13 @@ export default function AdminPage() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // البيانات جاية من الباك كما هي [{id, name}]
+
         setCategories(data);
       })
       .catch(() => toast.error("خطأ في جلب الكاتيجوريس"));
   }, [token]);
 
-  // =======================
-  // Cloudinary Widget
-  // =======================
+
   useEffect(() => {
     if (!window.cloudinary) {
       toast.error("Cloudinary غير محمّل");
@@ -76,9 +72,6 @@ export default function AdminPage() {
     );
   }, []);
 
-  // =======================
-  // إضافة كاتيجوري
-  // =======================
   const handleAddCategory = async () => {
     if (!catName) return toast.error("أدخل اسم الكاتيجوري");
 
@@ -107,9 +100,7 @@ export default function AdminPage() {
     }
   };
 
-  // =======================
-  // إضافة وجبة
-  // =======================
+
   const handleAddProduct = async (e) => {
     e.preventDefault();
 
@@ -135,7 +126,7 @@ export default function AdminPage() {
             name,
             englishName,
             price: Number(price),
-            category: Number(category), // id الحقيقي
+            category: Number(category), 
             image_url,
           }),
         }
@@ -165,9 +156,7 @@ export default function AdminPage() {
     }
   };
 
-  // =======================
-  // UI
-  // =======================
+
   return (
     <>
  

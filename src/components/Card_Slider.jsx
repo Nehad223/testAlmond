@@ -11,7 +11,7 @@ const Card_Slider = ({
   Id,
   isAdmin,
   onDelete,
-  onUpdateProduct, // دالة تحديث كل الخصائص
+  onUpdateProduct, 
     onAddToCart, 
 }) => {
   const [loaded, setLoaded] = useState(false);
