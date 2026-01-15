@@ -1351,3 +1351,77 @@ margin-top: auto;
     transform: translateY(0);
   }
 }
+/* Order Notes / Description */
+.checkout-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: rgba(255,255,255,.05);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.08);
+  margin-bottom: 14px;
+}
+
+.checkout-notes label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f3d98b;
+}
+
+.checkout-notes textarea {
+  width: 100%;
+  min-height: 70px;
+  max-height: 120px;
+  resize: vertical;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #E6CEB4;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  direction: rtl;
+}
+
+.checkout-notes textarea::placeholder {
+  color: rgba(230,206,180,.55);
+}
+
+.checkout-notes .char-count {
+  text-align: left;
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+.checkout-notes > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-direction: row-reverse;
+}
+
+
+.checkout-notes img {
+  width: 22px;
+  height: 22px;
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+.notes-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  direction: rtl;          /* مهم */
+}
+
+.notes-header label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f3d98b;
+}
+
+.notes-header img {
+  width: 18px;
+  height: 18px;
+  opacity: 0.85;
+}
+
