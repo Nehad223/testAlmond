@@ -239,13 +239,23 @@ const CartDrawer = ({
               <img src="/location.webp" />
             </div>
 
-            <button
-              className={`checkout-confirm ${isSending ? 'btn-loading' : ''}`}
-              onClick={sendOrder}
-              disabled={isSending}
-            >
-              تأكيد الطلب
-            </button>
+<button
+  className={`checkout-confirm ${isSending ? 'btn-loading' : ''}`}
+  onClick={() => {
+    if (window.gtag) {
+      window.gtag('event', 'confirm_order', {
+        event_category: 'ecommerce',
+        event_label: 'checkout_confirm',
+      });
+    }
+
+    sendOrder();
+  }}
+  disabled={isSending}
+>
+  تأكيد الطلب
+</button>
+
 
           </div>
         </div>
