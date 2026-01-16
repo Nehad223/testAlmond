@@ -140,7 +140,6 @@ export default function ProfessionalLoader({
       aria-live="polite"
       aria-hidden={!visible}
     >
-      <span className="pro-loader-accessible">Loading…</span>
 
       <div className="pro-loader-overlay" aria-hidden="true"></div>
 
