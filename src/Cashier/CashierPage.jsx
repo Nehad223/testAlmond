@@ -368,11 +368,22 @@ export default function CashierPage() {
                   ${order.id === newOrderId ? "row-new" : ""}
                 `}
               >
-                <td>
-                  <strong>{order.name}</strong>
-                  <div className="muted small">{order.phone}</div>
-                  {order.location && <div className="muted small">{order.location}</div>}
-                </td>
+               
+<td>
+  <strong>{order.name}</strong>
+  <div className="muted small">{order.phone}</div>
+  {order.location && <div className="muted small">{order.location}</div>}
+
+
+  {order.note && (
+    <div
+      className="order-note muted small"
+      title={String(order.note)} >
+      {order.note}
+    </div>
+  )}
+</td>
+
                 <td className="muted">
                   {new Date(order.created_at).toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" })}
                 </td>
@@ -419,8 +430,18 @@ export default function CashierPage() {
               <strong>{order.name}</strong>
               <div className="order-price">{order.total_price} ل.س</div>
             </div>
-            <div className="muted small">{order.phone}</div>
-            {order.location && <div className="card-meta">{order.location}</div>}
+
+<div className="muted small">{order.phone}</div>
+{order.location && <div className="card-meta">{order.location}</div>}
+
+{order.note && (
+  <div
+    className="order-note card-meta"
+    title={String(order.note)}
+  >
+    {order.note}
+  </div>
+)}
             <div className="card-meta">{new Date(order.created_at).toLocaleTimeString("ar-EG")}</div>
             <div className="order-items">
               {order.items.map((i) => (
