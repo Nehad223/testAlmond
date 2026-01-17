@@ -242,7 +242,7 @@ button::-moz-focus-inner { border: 0; }
 }
 
 .content-wrap {
-  padding: 2vh 1vh 30px 1vh !important;
+  padding: 2vh 1vh 0px 1vh !important;
   flex: 1;
 }
 
