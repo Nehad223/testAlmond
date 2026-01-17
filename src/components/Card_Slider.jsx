@@ -110,6 +110,8 @@ const Card_Slider = ({
                 border: "none",
                 cursor: "pointer",
                 background: "#ffd166",
+                marginLeft:10,
+                
               }}
             >
               تعديل
@@ -124,6 +126,7 @@ const Card_Slider = ({
                 cursor: "pointer",
                 background: "#ef476f",
                 color: "#fff",
+                
               }}
             >
               حذف

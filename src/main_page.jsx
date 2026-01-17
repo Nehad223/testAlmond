@@ -157,22 +157,59 @@ const Main_page = ({
   };
 
   /* ===================== ADMIN ACTIONS ===================== */
-  const handleDelete = async (mealId) => {
-    if (!window.confirm("متأكد من الحذف؟")) return;
+const handleDelete = async (mealId) => {
+  const confirm = await new Promise((resolve) => {
+    toast(
+      ({ closeToast }) => (
+        <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+          <span>هل أنت متأكد من حذف الوجبة؟</span>
+          <div style={{ display: "flex", justifyContent: "space-around", marginTop: "6px" }}>
+            <button
+              onClick={() => { resolve(true); closeToast(); }}
+              style={{
+                padding: "5px 12px",
+                backgroundColor: "#E74C3C",
+                color: "#fff",
+                border: "none",
+                borderRadius: "6px",
+                fontWeight: "bold",
+                cursor: "pointer",
+              }}
+            >
+              نعم
+            </button>
+            <button
+              onClick={() => { resolve(false); closeToast(); }}
+              style={{
+                padding: "5px 12px",
+                backgroundColor: "#95A5A6",
+                color: "#fff",
+                border: "none",
+                borderRadius: "6px",
+                fontWeight: "bold",
+                cursor: "pointer",
+              }}
+            >
+              لا
+            </button>
+          </div>
+        </div>
+      ),
+      { autoClose: false, closeOnClick: false, draggable: false }
+    );
+  });
+  if (!confirm) return; 
+  try {
+    await onDelete(mealId);
+    setData((prev) =>
+      prev.map((cat) => ({
+        ...cat,
+        meals: cat.meals.filter((meal) => meal.id !== mealId),
+      }))
+    );
 
-    try {
-      await onDelete(mealId);
-      setData(prev =>
-        prev.map(cat => ({
-          ...cat,
-          meals: cat.meals.filter(m => m.id !== mealId),
-        }))
-      );
-      toast.success("تم حذف الوجبة");
-    } catch {
-      toast.error("فشل الحذف");
-    }
-  };
+  } catch {}
+};
 
   const handleUpdate = async (mealId, updatedData) => {
     try {
@@ -185,9 +222,9 @@ const Main_page = ({
           ),
         }))
       );
-      toast.success("تم تحديث الوجبة");
+ 
     } catch {
-      toast.error("فشل التحديث");
+
     }
   };
 
@@ -199,7 +236,10 @@ const Main_page = ({
       <header className="site-header">
         <div className="header-inner">
           <Logo />
+          {!isAdmin &&
           <Store count={cartCount} onToggle={() => setCartOpen(true)} />
+          
+          }
           <Navbar
             categories={data}
             active={activeCategory}
