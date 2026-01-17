@@ -72,111 +72,90 @@ export default function AdminPage() {
     );
   }, []);
 
-const handleAddCategory = async () => {
-  if (!catName) return toast.error("أدخل اسم الكاتيجوري");
+  const handleAddCategory = async () => {
+    if (!catName) return toast.error("أدخل اسم الكاتيجوري");
 
-  try {
-    const body = JSON.stringify({ name: catName });
+    try {
+      const res = await fetch(
+        "https://snackalmond.duckdns.org/createcategory/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ name: catName }),
+        }
+      );
 
-    const [res1, res2] = await Promise.all([
-      fetch("https://snackalmond.duckdns.org/createcategory/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body,
-      }),
-      fetch("https://snackalmond1.pythonanywhere.com/createcategory/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body,
-      }),
-    ]);
+      if (!res.ok) throw new Error();
 
-    if (!res1.ok || !res2.ok) {
-      throw new Error("One request failed");
+      const data = await res.json();
+      setCategories((prev) => [...prev, data]);
+      setCatName("");
+      setIsCatModalOpen(false);
+      toast.success("تمت إضافة الكاتيجوري");
+    } catch {
+      toast.error("خطأ أثناء إضافة الكاتيجوري");
+    }
+  };
+
+
+  const handleAddProduct = async (e) => {
+    e.preventDefault();
+
+    const { name, englishName, price, category, image_url } = prodForm;
+
+    if (!name || !englishName || !price || !category || !image_url) {
+      return toast.error("املأ جميع الحقول");
     }
 
-    const data = await res1.json(); 
-    setCategories((prev) => [...prev, data]);
+    setLoading(true);
 
-    setCatName("");
-    setIsCatModalOpen(false);
-    toast.success("تمت إضافة الكاتيجوري");
+    try {
 
-  } catch (err) {
-    toast.error("خطأ أثناء إضافة الكاتيجوري");
-    console.error(err);
-  }
-};
+      const res = await fetch(
+        "https://snackalmond.duckdns.org/createmeal/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            name,
+            englishName,
+            price: Number(price),
+            category: Number(category), 
+            image_url,
+          }),
+        }
+    
 
+      );
+      console.log(prodForm)
 
+      if (!res.ok) throw new Error();
 
-const handleAddProduct = async (e) => {
-  e.preventDefault();
+      await res.json();
 
-  const { name, englishName, price, category, image_url } = prodForm;
+      setProdForm({
+        name: "",
+        englishName: "",
+        price: "",
+        category: "",
+        image_url: "",
+      });
 
-  if (!name || !englishName || !price || !category || !image_url) {
-    return toast.error("املأ جميع الحقول");
-  }
-
-  setLoading(true);
-
-  try {
-    const body = JSON.stringify({
-      name,
-      englishName,
-      price: Number(price),
-      category: Number(category),
-      image_url,
-    });
-
-    const [res1, res2] = await Promise.all([
-      fetch("https://snackalmond.duckdns.org/createmeal/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body,
-      }),
-      fetch("https://snackalmond1.pythonanywhere.com/createmeal/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body,
-      }),
-    ]);
-
-    if (!res1.ok || !res2.ok) {
-      throw new Error("One request failed");
+      setIsProdModalOpen(false);
+      toast.success("تمت إضافة الوجبة");
+    } catch {
+      toast.error("حدث خطأ أثناء الإضافة");
+    } finally {
+      setLoading(false);
     }
-    await res1.json(); 
-    setProdForm({
-      name: "",
-      englishName: "",
-      price: "",
-      category: "",
-      image_url: "",
-    });
+  };
 
-    setIsProdModalOpen(false);
-    toast.success("تمت إضافة الوجبة");
-
-  } catch (err) {
-    console.error(err);
-    toast.error("حدث خطأ أثناء الإضافة");
-  } finally {
-    setLoading(false);
-  }
-};
 
   return (
     <>
