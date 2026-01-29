@@ -235,7 +235,7 @@ const handleDelete = async (mealId) => {
             {!loading && <Logo />}
           </div>
           {!isAdmin && (
-            <div className={`store-skeleton-wrapper ${loading ? "store-skeleton" : ""}`}>
+            <div >
               {!loading && (
                 <Store count={cartCount} onToggle={() => setCartOpen(true)} />
               )}
@@ -318,3 +318,4 @@ const handleDelete = async (mealId) => {
 };
 
 export default Main_page;
+

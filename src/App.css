@@ -65,6 +65,14 @@ background: linear-gradient(135deg, #FFB703, #F77F00);
   box-shadow: 0 12px 30px rgba(0,0,0,.45);
 }
 
+.store-skeleton-wrapper {
+  position: fixed;
+  top: 7vh;
+  right: 2vh;
+  width: 120px;
+  height: 46px;
+  pointer-events: none;
+}
 
 .store-skeleton {
   position: relative;
@@ -342,7 +350,7 @@ button::-moz-focus-inner { border: 0; }
   grid-template-columns: repeat(2, 1fr) !important;
   gap: 7px;
   box-sizing: border-box;
-  margin-top: 25px;
+  margin-top: 4px;
 }
 
 .cards-skeleton-item {
