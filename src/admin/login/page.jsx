@@ -1,9 +1,11 @@
 import { useState } from "react";
-import './../admin.css';
+import { useNavigate } from "react-router-dom";
+import "./../admin.css";
 export default function AdminLogin() {
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
   const handleLogin = async () => {
     setError("");
 
@@ -19,14 +21,16 @@ export default function AdminLogin() {
       if (!res.ok) {
         setError(data.error || "Login failed");
       } else {
-        console.log(data);
         sessionStorage.setItem("token", data.token);
-        
         sessionStorage.setItem("type", data.userType);
 
-        if(data.userType=="almond"){ window.location.href = "/admin";}
-        else if(data.userType=="cashier"){window.location.href = "/cashier";}
-       
+        if (data.userType === "almond") {
+          navigate("/admin", { replace: true });
+        } else if (data.userType === "cashier") {
+          navigate("/cashier", { replace: true });
+        } else {
+          navigate("/", { replace: true });
+        }
       }
     } catch (err) {
       setError("Server error");

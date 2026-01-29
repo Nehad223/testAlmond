@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./../admin.css";
 import Navbar from "../../components/Navbar";
@@ -22,6 +23,7 @@ export default function AdminPage() {
 
   const widgetRef = useRef(null);
   const token = sessionStorage.getItem("token");
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -34,7 +36,6 @@ export default function AdminPage() {
     })
       .then((res) => res.json())
       .then((data) => {
-
         setCategories(data);
       })
       .catch(() => toast.error("خطأ في جلب الكاتيجوريس"));
@@ -113,7 +114,6 @@ export default function AdminPage() {
     setLoading(true);
 
     try {
-
       const res = await fetch(
         "https://snackalmond.duckdns.org/createmeal/",
         {
@@ -130,10 +130,7 @@ export default function AdminPage() {
             image_url,
           }),
         }
-    
-
       );
-      console.log(prodForm)
 
       if (!res.ok) throw new Error();
 
@@ -273,9 +270,9 @@ export default function AdminPage() {
         </div>
 
       )}
-          <button
+      <button
         className="admin-btn bg-yellow-500"
-         onClick={() => (window.location.href = "admin/edit")}
+        onClick={() => navigate("/admin/edit")}
       >
         تعديل الوجبة
       </button>

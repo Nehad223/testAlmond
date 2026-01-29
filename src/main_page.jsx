@@ -18,7 +18,6 @@ const Main_page = ({
   const [data, setData] = useState([]);
   const [activeCategory, setActiveCategory] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [uiReady, setUiReady] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [cart, setCart] = useState([]);
 
@@ -57,7 +56,6 @@ const Main_page = ({
       })
       .finally(() => {
         setLoading(false);
-        setUiReady(true);
       });
   }, []);
 
@@ -228,37 +226,62 @@ const handleDelete = async (mealId) => {
     }
   };
 
-  if (loading || !uiReady) return <Loader />;
-
   /* ===================== RENDER ===================== */
   return (
     <div className="app">
       <header className="site-header">
         <div className="header-inner">
-          <Logo />
-          {!isAdmin &&
-          <Store count={cartCount} onToggle={() => setCartOpen(true)} />
-          
-          }
-          <Navbar
-            categories={data}
-            active={activeCategory}
-            setActive={setActiveCategory}
-          />
+          <div className={`logo-wrapper ${loading ? "skeleton-block logo-skeleton" : ""}`}>
+            {!loading && <Logo />}
+          </div>
+          {!isAdmin && (
+            <Store count={cartCount} onToggle={() => setCartOpen(true)} />
+          )}
+          <div className={`navbar-wrapper ${loading ? "skeleton-block skeleton-navbar" : ""}`}>
+            {!loading && (
+              <Navbar
+                categories={data}
+                active={activeCategory}
+                setActive={setActiveCategory}
+              />
+            )}
+          </div>
         </div>
       </header>
 
       <main className="main-scroll" ref={contentRef}>
         <div className="content-wrap" key={activeCategory}>
-          {data?.[activeCategory]?.meals?.length > 0 && (
-            <Cards
-              key={activeCategory}
-              meals={data[activeCategory].meals}
-              isAdmin={isAdmin}
-              onDelete={handleDelete}
-              onUpdateProduct={handleUpdate}
-              onAddToCart={addToCart}
-            />
+          {loading ? (
+            <div className="cards-skeleton-grid">
+              {Array.from({ length: 8 }).map((_, idx) => (
+                <div key={idx} className="cards-skeleton-item">
+                  <div className="Card_Slider card card-skeleton">
+                    <div className="card-skeleton-overlay" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            data?.[activeCategory]?.meals?.length > 0 ? (
+              <Cards
+                key={activeCategory}
+                meals={data[activeCategory].meals}
+                isAdmin={isAdmin}
+                onDelete={handleDelete}
+                onUpdateProduct={handleUpdate}
+                onAddToCart={addToCart}
+              />
+            ) : (
+              <div className="cards-skeleton-grid">
+                {Array.from({ length: 8 }).map((_, idx) => (
+                  <div key={idx} className="cards-skeleton-item">
+                    <div className="Card_Slider card card-skeleton">
+                      <div className="card-skeleton-overlay" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )
           )}
         </div>
       </main>

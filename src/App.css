@@ -160,6 +160,59 @@ font-size: 0.8rem;
   pointer-events: none;
 }
 
+.logo-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 20vh;
+}
+
+.navbar-wrapper {
+  width: 100%;
+}
+
+.skeleton-block {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #242028;
+}
+
+.skeleton-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #242028 0%,
+    #2f2936 20%,
+    #242028 40%,
+    #242028 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+.skeleton-navbar {
+  height: 52px;
+  margin-top: 6px;
+}
+
+.logo-skeleton {
+  background: linear-gradient(180deg, #F39C12 0%, #D35400 100%);
+}
+
+.logo-skeleton::before {
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0.05) 0%,
+    rgba(255,255,255,0.25) 20%,
+    rgba(0,0,0,0.05) 40%,
+    rgba(0,0,0,0.05) 100%
+  );
+}
+
 
 .gn-navbar {
   position: relative;
@@ -258,6 +311,20 @@ button::-moz-focus-inner { border: 0; }
   direction: rtl;
 }
 
+.cards-skeleton-grid {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 7px;
+  box-sizing: border-box;
+}
+
+.cards-skeleton-item {
+  height: 100%;
+}
+
 
 .add_op_Text {
   display: inline-flex;
@@ -287,13 +354,31 @@ button::-moz-focus-inner { border: 0; }
 
 .Card_Slider {
   display: flex;
-flex-direction: column;
+  flex-direction: column;
   height: 100%;  
   background-color: #1A1A22 !important;
-   border-radius: 10px;
-   border: 1px solid rgba(255,255,255,0.04);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+  border: none !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
 .card { background-color: transparent !important; }
+
+.card-skeleton-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    #242028 0%,
+    #2f2936 20%,
+    #242028 40%,
+    #242028 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  z-index: 2;
+}
 
 .img-wrapper {
   width: 100%;
@@ -301,25 +386,52 @@ flex-direction: column;
   overflow: hidden;
   border-radius: 8px 8px 0 0;
   position: relative;
+  background: #1f1a12;
+}
+
+.img-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    #242028 0%,
+    #2f2936 20%,
+    #242028 40%,
+    #242028 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+.img-wrapper.loading img {
+  opacity: 0;
+}
+
+.img-wrapper.loaded::before {
+  display: none;
 }
 
 .img-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: filter 0.4s ease, opacity 0.3s ease;
+  transition: opacity 0.3s ease;
   opacity: 0;
-}
-
-.img-wrapper.loading img {
-  opacity: 1;
-  filter: blur(20px);
-  background: #1F1A12;
 }
 
 .img-wrapper.loaded img {
   opacity: 1;
-  filter: blur(0);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
 }
 
 .Card_Slider .info {

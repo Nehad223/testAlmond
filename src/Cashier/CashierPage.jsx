@@ -35,7 +35,9 @@ export default function CashierPage() {
     setOrders((prev) => prev.filter((o) => o.id !== id));
     fetch(`https://snackalmond.duckdns.org/details/${id}/`, {
       method: "DELETE",
-    }).catch(console.error);
+    }).catch((error) => {
+      console.error(error);
+    });
     setDeleteId(null);
   };
 
@@ -82,7 +84,6 @@ export default function CashierPage() {
     socketRef.current = socket;
 
     socket.onopen = async () => {
-      console.log("✅ WebSocket connected");
       setSocketStatus("connected");
 
       isSyncingRef.current = true;
@@ -129,8 +130,6 @@ export default function CashierPage() {
               }, 100);
               setNewOrderId(missed[0].id);
               setTimeout(() => setNewOrderId(null), 3000);
-            } else {
-              console.log("Missed orders but permission not granted; skipping sound/notification");
             }
           }
 
@@ -179,8 +178,6 @@ export default function CashierPage() {
                 } catch (e) {
                   console.error("Notification error:", e);
                 }
-              } else {
-                console.log("Incoming order but permission not granted; skipping sound/notification");
               }
 
               setTimeout(() => setNewOrderId(null), 3000);
@@ -194,7 +191,7 @@ export default function CashierPage() {
     };
 
     socket.onclose = () => {
-      console.warn("⚠️ WebSocket disconnected");
+      console.warn("WebSocket disconnected");
       setSocketStatus("disconnected");
 
       reconnectTimeoutRef.current = setTimeout(() => {
