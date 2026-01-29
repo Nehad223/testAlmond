@@ -257,6 +257,8 @@ const handleDelete = async (mealId) => {
                 <div key={idx} className="cards-skeleton-item">
                   <div className="Card_Slider card card-skeleton">
                     <div className="card-skeleton-overlay" />
+                    <div className="img-wrapper" />
+                    <div className="info" />
                   </div>
                 </div>
               ))}
@@ -277,6 +279,8 @@ const handleDelete = async (mealId) => {
                   <div key={idx} className="cards-skeleton-item">
                     <div className="Card_Slider card card-skeleton">
                       <div className="card-skeleton-overlay" />
+                      <div className="img-wrapper" />
+                      <div className="info" />
                     </div>
                   </div>
                 ))}
