@@ -14,9 +14,7 @@ const Card_Slider = ({
   onUpdateProduct,
   onAddToCart,
 }) => {
-  const hasImage = Boolean(Img);
   const [loaded, setLoaded] = useState(false);
-  const [loadFailed, setLoadFailed] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({
     name: Title,
@@ -26,8 +24,6 @@ const Card_Slider = ({
     image_url: Img,
   });
   const [saving, setSaving] = useState(false);
-
-  const showSkeleton = !loaded || loadFailed || !hasImage;
 
   const handleOpenEdit = () => {
     setForm({
@@ -66,41 +62,37 @@ const Card_Slider = ({
 
   return (
     <>
-      <div className={`Card_Slider card ${showSkeleton ? "card-skeleton" : ""}`}>
-        {showSkeleton && <div className="card-skeleton-overlay" />}
+      <div className={`Card_Slider card ${!loaded ? "card-skeleton" : ""}`}>
+        {!loaded && <div className="card-skeleton-overlay" />}
 
-        {hasImage && (
-          <div className={`img-wrapper ${loaded ? "loaded" : "loading"}`}>
-            <img
-              src={Img}
-              loading="lazy"
-              onLoad={() => setLoaded(true)}
-              onError={() => setLoadFailed(true)}
-              alt={Title}
+        <div className={`img-wrapper ${loaded ? "loaded" : "loading"}`}>
+          <img
+            src={Img || "/exampel.jpg"}
+            loading="lazy"
+            onLoad={() => setLoaded(true)}
+            onError={() => setLoaded(true)}
+            alt={Title}
+          />
+        </div>
+
+        <div className="info">
+          <h1 className="ar">{Title}</h1>
+          <h1 className="en">{TitleEng}</h1>
+          <h1>{PriceNumber} ل.س</h1>
+          {!isAdmin && (
+            <Add_Store_Btn
+              meal={{
+                id: Id,
+                name: Title,
+                price: PriceNumber,
+                image: Img,
+              }}
+              onAddToCart={onAddToCart}
             />
-          </div>
-        )}
+          )}
+        </div>
 
-        {!showSkeleton && (
-          <div className="info">
-            <h1 className="ar">{Title}</h1>
-            <h1 className="en">{TitleEng}</h1>
-            <h1>{PriceNumber} ل.س</h1>
-            {!isAdmin && (
-              <Add_Store_Btn
-                meal={{
-                  id: Id,
-                  name: Title,
-                  price: PriceNumber,
-                  image: Img,
-                }}
-                onAddToCart={onAddToCart}
-              />
-            )}
-          </div>
-        )}
-
-        {!showSkeleton && isAdmin && (
+        {isAdmin && (
           <div
             className="actions"
             style={{

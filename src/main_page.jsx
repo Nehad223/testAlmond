@@ -235,7 +235,11 @@ const handleDelete = async (mealId) => {
             {!loading && <Logo />}
           </div>
           {!isAdmin && (
-            <Store count={cartCount} onToggle={() => setCartOpen(true)} />
+            <div className={`store-skeleton-wrapper ${loading ? "store-skeleton" : ""}`}>
+              {!loading && (
+                <Store count={cartCount} onToggle={() => setCartOpen(true)} />
+              )}
+            </div>
           )}
           <div className={`navbar-wrapper ${loading ? "skeleton-block skeleton-navbar" : ""}`}>
             {!loading && (
