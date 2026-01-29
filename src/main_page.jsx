@@ -260,9 +260,13 @@ const handleDelete = async (mealId) => {
               {Array.from({ length: 8 }).map((_, idx) => (
                 <div key={idx} className="cards-skeleton-item">
                   <div className="Card_Slider card card-skeleton">
-                    <div className="card-skeleton-overlay" />
-                    <div className="img-wrapper" />
-                    <div className="info" />
+                    <div className="card-skeleton-img" />
+                    <div className="card-skeleton-info">
+                      <div className="card-skeleton-line long" />
+                      <div className="card-skeleton-line" />
+                      <div className="card-skeleton-line short" />
+                      <div className="card-skeleton-btn" />
+                    </div>
                   </div>
                 </div>
               ))}
@@ -282,9 +286,13 @@ const handleDelete = async (mealId) => {
                 {Array.from({ length: 8 }).map((_, idx) => (
                   <div key={idx} className="cards-skeleton-item">
                     <div className="Card_Slider card card-skeleton">
-                      <div className="card-skeleton-overlay" />
-                      <div className="img-wrapper" />
-                      <div className="info" />
+                      <div className="card-skeleton-img" />
+                      <div className="card-skeleton-info">
+                        <div className="card-skeleton-line long" />
+                        <div className="card-skeleton-line" />
+                        <div className="card-skeleton-line short" />
+                        <div className="card-skeleton-btn" />
+                      </div>
                     </div>
                   </div>
                 ))}
