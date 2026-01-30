@@ -1865,3 +1865,98 @@ margin-top: auto;
   }
 }
 
+
+/* =====================================
+   CARD SLIDER – FINAL LOADING FIX
+   ضيف هاد الكود بآخر الملف
+   ===================================== */
+
+/* تثبيت بنية الكارد */
+.Card_Slider {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ======================
+   SKELETON OVERLAY
+   ====================== */
+.card-skeleton-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(
+    270deg,
+    #242028 0%,
+    #2f2936 20%,
+    #242028 40%,
+    #242028 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  opacity: 1;
+}
+
+/* ======================
+   IMAGE LOADING BEHAVIOR
+   ====================== */
+.img-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+/* الصورة مخفية وقت التحميل */
+.img-wrapper.loading img {
+  opacity: 0;
+  transform: scale(1.05);
+}
+
+/* بعد التحميل */
+.img-wrapper.loaded img {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity .35s ease, transform .45s ease;
+}
+
+/* ======================
+   TEXT / INFO BEHAVIOR
+   ====================== */
+
+/* اخفاء النص بالكامل وقت التحميل */
+.Card_Slider.loading .info {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* اظهار النص بعد اكتمال التحميل */
+.Card_Slider.loaded .info {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .25s ease;
+}
+
+/* ======================
+   REMOVE SKELETON
+   ====================== */
+.Card_Slider.loaded .card-skeleton-overlay {
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+/* ======================
+   CARD APPEAR ANIMATION
+   ====================== */
+.Card_Slider.loaded {
+  animation: cardAppear .25s ease;
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: .85;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
