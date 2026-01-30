@@ -76,7 +76,7 @@ background: linear-gradient(135deg, #FFB703, #F77F00);
 
 .store-skeleton {
   position: relative;
-  border-radius: 100px;
+
   background: linear-gradient(135deg, #F39C12, #D35400);
   overflow: hidden;
 }
@@ -86,7 +86,7 @@ background: linear-gradient(135deg, #FFB703, #F77F00);
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    90deg,
+    270deg,
     rgba(255,255,255,0.05) 0%,
     rgba(255,255,255,0.35) 25%,
     rgba(255,255,255,0.05) 50%,
@@ -206,7 +206,6 @@ font-size: 0.8rem;
 .skeleton-block {
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
   background: #242028;
 }
 
@@ -215,7 +214,7 @@ font-size: 0.8rem;
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    90deg,
+    270deg,
     #242028 0%,
     #2f2936 20%,
     #242028 40%,
@@ -236,7 +235,7 @@ font-size: 0.8rem;
 
 .logo-skeleton::before {
   background: linear-gradient(
-    90deg,
+    270deg,
     rgba(0,0,0,0.05) 0%,
     rgba(255,255,255,0.25) 20%,
     rgba(0,0,0,0.05) 40%,
@@ -378,7 +377,7 @@ button::-moz-focus-inner { border: 0; }
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    90deg,
+    270deg,
     rgba(255,255,255,0.05) 0%,
     rgba(255,255,255,0.35) 25%,
     rgba(255,255,255,0.05) 50%,
@@ -399,7 +398,7 @@ button::-moz-focus-inner { border: 0; }
   height: 10px;
   border-radius: 999px;
   background: linear-gradient(
-    90deg,
+    270deg,
     rgba(255,255,255,0.05) 0%,
     rgba(255,255,255,0.4) 30%,
     rgba(255,255,255,0.08) 60%
@@ -430,7 +429,7 @@ button::-moz-focus-inner { border: 0; }
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    90deg,
+    270deg,
     rgba(255,255,255,0.05) 0%,
     rgba(255,255,255,0.35) 25%,
     rgba(255,255,255,0.05) 50%,
@@ -484,7 +483,7 @@ button::-moz-focus-inner { border: 0; }
   inset: 0;
   border-radius: 8px;
   background: linear-gradient(
-    90deg,
+    270deg,
     #242028 0%,
     #2f2936 20%,
     #242028 40%,
@@ -510,7 +509,7 @@ button::-moz-focus-inner { border: 0; }
   inset: 0;
   border-radius: inherit;
   background: linear-gradient(
-    90deg,
+    270deg,
     #242028 0%,
     #2f2936 20%,
     #242028 40%,
@@ -1272,8 +1271,6 @@ button[disabled],
 @keyframes spin{
   to{ transform: translate(-50%, -50%) rotate(360deg); }
 }
-
-
 .checkout-sending-overlay{
   position: absolute;
   inset: 0;
@@ -1655,35 +1652,30 @@ margin-top: auto;
   display: flex;
   align-items: center;
   gap: 8px;
-  direction: rtl;          /* مهم */
+  direction: rtl;          
 }
-
 .notes-header label {
   font-size: 0.85rem;
   font-weight: 700;
   color: #f3d98b;
 }
-
 .notes-header img {
   width: 18px;
   height: 18px;
   opacity: 0.85;
 }
-
-/* ===== Skeleton base ===== */
 .skeleton-block {
   position: relative;
   overflow: hidden;
-  border-radius: 10px;
 }
 
 .skeleton-block::after {
   content: "";
   position: absolute;
   inset: 0;
-  transform: translateX(-100%);
+  transform: translateX(100%);
   background: linear-gradient(
-    90deg,
+    270deg,
     transparent,
     rgba(255, 255, 255, 0.6),
     transparent
@@ -1693,6 +1685,30 @@ margin-top: auto;
 
 @keyframes shimmer {
   100% {
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
+}
+
+.img-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  background: #1f1a12;
+}
+
+/* Skeleton */
+.img-wrapper::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    270deg,
+    #242028 0%,
+    #2f2936 20%,
+    #242028 40%
+    #242028 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  z-index: 1;
 }
