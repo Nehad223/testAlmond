@@ -207,17 +207,14 @@ font-size: 0.8rem;
 .skeleton-block {
   position: relative;
   overflow: hidden;
-  border-radius: 12px;
   background: #1C1C1C;
 }
 
 .skeleton-block::before {
-  content: "";
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  border-radius: inherit;
   background: linear-gradient(
     90deg,
     #1C1C1C 0%,
@@ -1750,7 +1747,6 @@ margin-top: auto;
 .skeleton-block {
   position: relative;
   overflow: hidden;
-  border-radius: 10px;
   background: #1C1C1C;
 }
 
@@ -1760,7 +1756,6 @@ margin-top: auto;
   inset: 0;
   width: 100%;
   height: 100%;
-  border-radius: inherit;
   background: linear-gradient(
     90deg,
     #1C1C1C 0%,
