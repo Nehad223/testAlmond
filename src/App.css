@@ -356,12 +356,6 @@ button::-moz-focus-inner { border: 0; }
   height: 100%;
 }
 
-.card-skeleton {
-  position: relative;
-  border-radius: 8px;
-  background-color: #1A1A22;
-  overflow: hidden;
-}
 
 .card-skeleton-img {
   width: 100%;
@@ -1753,13 +1747,7 @@ margin-top: auto;
   }
 }
 
-/* 2) سكيلتون هادئ بنفس ألوان الكارد */
-.card-skeleton {
-  background: #1A1A22;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-}
+
 
 .card-skeleton-line {
   height: 11px;
@@ -1987,14 +1975,8 @@ margin-top: auto;
   animation: skeleton-shimmer 1.4s infinite linear;
 }
 
-/* ❌ إلغاء أي تأثير بعد التحميل */
-.skeleton::after {
-  display: none !important;
-  content: none !important;
-  animation: none !important;
-}
 
-/* أنيميشن واحد فقط – نفس before */
+
 @keyframes skeleton-shimmer {
   0% {
     transform: translateX(-100%);
