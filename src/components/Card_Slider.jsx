@@ -63,9 +63,19 @@ const Card_Slider = ({
   return (
     <>
       <div className={`Card_Slider card ${!loaded ? "card-skeleton" : ""}`}>
-        {!loaded && <div className="card-skeleton-overlay" />}
+        {!loaded ? (
+          <>
+            <div className="card-skeleton-img" />
+            <div className="card-skeleton-info">
+              <div className="card-skeleton-line long" />
+              <div className="card-skeleton-line" />
+              <div className="card-skeleton-line short" />
+              <div className="card-skeleton-btn" />
+            </div>
+          </>
+        ) : null}
 
-        <div className={`img-wrapper ${loaded ? "loaded" : "loading"}`}>
+        <div className={`img-wrapper ${loaded ? "loaded" : "loading"} ${!loaded ? "card-skeleton-loading-hidden" : ""}`}>
           <img
             src={Img || "/exampel.jpg"}
             loading="lazy"
@@ -75,7 +85,7 @@ const Card_Slider = ({
           />
         </div>
 
-        <div className="info">
+        <div className={`info ${!loaded ? "card-skeleton-loading-hidden" : ""}`}>
           <h1 className="ar">{Title}</h1>
           <h1 className="en">{TitleEng}</h1>
           <h1>{PriceNumber} ل.س</h1>
