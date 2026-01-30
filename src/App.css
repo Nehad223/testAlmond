@@ -208,19 +208,22 @@ font-size: 0.8rem;
   position: relative;
   overflow: hidden;
   border-radius: 12px;
-  background: #242028;
+  background: #1C1C1C;
 }
 
 .skeleton-block::before {
   content: "";
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
   background: linear-gradient(
     90deg,
-    #242028 0%,
-    #2f2936 20%,
-    #242028 40%,
-    #242028 100%
+    #1C1C1C 0%,
+    #2a2a2a 20%,
+    #1C1C1C 40%,
+    #1C1C1C 100%
   );
   background-size: 200% 100%;
   animation: shimmer-rtl 1.2s infinite;
@@ -358,7 +361,17 @@ button::-moz-focus-inner { border: 0; }
 }
 
 .cards-skeleton-item {
+  display: flex;
+  width: 100%;
+  min-height: 0;
+}
+
+.cards-skeleton-item .Card_Slider.card-skeleton {
+  width: 100%;
   height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-skeleton {
@@ -370,9 +383,11 @@ button::-moz-focus-inner { border: 0; }
 
 .card-skeleton-img {
   width: 100%;
-  height: 15vh;
+  height: 20vh;
+  min-height: 0;
+  flex-shrink: 0;
   border-radius: 8px 8px 0 0;
-  background: linear-gradient(180deg, #F39C12 0%, #D35400 100%);
+  background: #1C1C1C;
   position: relative;
   overflow: hidden;
 }
@@ -381,32 +396,53 @@ button::-moz-focus-inner { border: 0; }
   content: "";
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0.05) 0%,
-    rgba(255,255,255,0.35) 25%,
-    rgba(255,255,255,0.05) 50%,
-    rgba(255,255,255,0.05) 100%
+    #1C1C1C 0%,
+    #2a2a2a 20%,
+    #1C1C1C 40%,
+    #1C1C1C 100%
   );
   background-size: 200% 100%;
   animation: shimmer-rtl 1.2s infinite;
 }
 
 .card-skeleton-info {
+  width: 100%;
   padding: 8px 6px 10px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 6px;
+  flex: 1 1 auto;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 .card-skeleton-line {
   height: 10px;
   border-radius: 999px;
+  background: linear-gradient(180deg, #F39C12 0%, #D35400 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-skeleton-line::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0.05) 0%,
-    rgba(255,255,255,0.4) 30%,
-    rgba(255,255,255,0.08) 60%
+    rgba(0,0,0,0.08) 0%,
+    rgba(255,255,255,0.25) 20%,
+    rgba(0,0,0,0.08) 40%,
+    rgba(0,0,0,0.08) 100%
   );
   background-size: 200% 100%;
   animation: shimmer-rtl 1.2s infinite;
@@ -424,7 +460,7 @@ button::-moz-focus-inner { border: 0; }
   margin-top: 4px;
   height: 28px;
   border-radius: 999px;
-  background: linear-gradient(135deg, #FFB703, #F77F00);
+  background: linear-gradient(180deg, #F39C12 0%, #D35400 100%);
   position: relative;
   overflow: hidden;
 }
@@ -433,12 +469,15 @@ button::-moz-focus-inner { border: 0; }
   content: "";
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0.05) 0%,
-    rgba(255,255,255,0.35) 25%,
-    rgba(255,255,255,0.05) 50%,
-    rgba(255,255,255,0.05) 100%
+    rgba(0,0,0,0.08) 0%,
+    rgba(255,255,255,0.25) 20%,
+    rgba(0,0,0,0.08) 40%,
+    rgba(0,0,0,0.08) 100%
   );
   background-size: 200% 100%;
   animation: shimmer-rtl 1.2s infinite;
@@ -486,13 +525,15 @@ button::-moz-focus-inner { border: 0; }
 .card-skeleton-overlay {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   border-radius: 8px;
   background: linear-gradient(
     90deg,
-    #242028 0%,
-    #2f2936 20%,
-    #242028 40%,
-    #242028 100%
+    #1C1C1C 0%,
+    #2a2a2a 20%,
+    #1C1C1C 40%,
+    #1C1C1C 100%
   );
   background-size: 200% 100%;
   animation: shimmer-rtl 1.2s infinite;
@@ -501,24 +542,26 @@ button::-moz-focus-inner { border: 0; }
 
 .img-wrapper {
   width: 100%;
-  height: 15vh;
+  height: 20vh;
   overflow: hidden;
   border-radius: 8px 8px 0 0;
   position: relative;
-  background: #1f1a12;
+  background: #1C1C1C;
 }
 
 .img-wrapper::before {
   content: "";
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   border-radius: inherit;
   background: linear-gradient(
     90deg,
-    #242028 0%,
-    #2f2936 20%,
-    #242028 40%,
-    #242028 100%
+    #1C1C1C 0%,
+    #2a2a2a 20%,
+    #1C1C1C 40%,
+    #1C1C1C 100%
   );
   background-size: 200% 100%;
   animation: shimmer-rtl 1.2s infinite;
@@ -607,10 +650,11 @@ button::-moz-focus-inner { border: 0; }
 
 @media (max-width: 1000px) {
   .Card_Slider .info h1 { font-size: 0.8rem !important; }
-  .Card_Slider .info { height: 145px;
-    padding-bottom: 15px;
+  .Card_Slider .info { height: 115px;
+    padding-bottom: 12px;
   
   }
+  .card-skeleton-info { height: 115px; padding-bottom: 12px; }
 }
 
 @media (max-width: 700px) {
@@ -618,10 +662,11 @@ button::-moz-focus-inner { border: 0; }
 }
 
 @media (max-width: 500px) {
-  .Card_Slider .info { height: 125px;
-  padding-bottom: 10px;
-  padding-top: 5px;
+  .Card_Slider .info { height: 100px;
+  padding-bottom: 8px;
+  padding-top: 4px;
   }
+  .card-skeleton-info { height: 100px; padding-bottom: 8px; padding-top: 4px; }
 }
 .Cards > div {
   opacity: 1;
@@ -649,13 +694,14 @@ button::-moz-focus-inner { border: 0; }
     padding-top: 10px !important;
   }
   .Card_Slider .info {
-    height: 140px; 
-    padding-top: 5px;
-    padding-bottom: 15px;
+    height: 110px; 
+    padding-top: 4px;
+    padding-bottom: 12px;
   }
     .Card_Slider .info h1{
     font-size: 0.9rem !important;
   }
+  .card-skeleton-info { height: 110px; padding-top: 4px; padding-bottom: 12px; }
 }
 @media (min-width: 501px) and (max-width: 700px) {
   .content-wrap{
@@ -663,13 +709,14 @@ button::-moz-focus-inner { border: 0; }
   }
 
   .Card_Slider .info {
-    height: 145px;
-    padding-top: 5px;
-    padding-bottom: 15px;
+    height: 115px;
+    padding-top: 4px;
+    padding-bottom: 12px;
   }
     .Card_Slider .info h1{
     font-size: 1rem !important;
   }
+  .card-skeleton-info { height: 115px; padding-top: 4px; padding-bottom: 12px; }
       .Cards{
 direction: rtl;
   grid-template-columns: repeat(3, 1fr) !important;
@@ -690,13 +737,14 @@ max-width: 1200px;
   }
 
   .Card_Slider .info {
-    height: 145px;
-    padding-top: 5px;
-    padding-bottom: 15px;
+    height: 115px;
+    padding-top: 4px;
+    padding-bottom: 12px;
   }
     .Card_Slider .info h1{
     font-size: 1rem !important;
   }
+  .card-skeleton-info { height: 115px; padding-top: 4px; padding-bottom: 12px; }
       .Cards{
 direction: rtl;
   grid-template-columns: repeat(4, 1fr) !important;
@@ -721,13 +769,14 @@ max-width: 1200px;
     padding-top: 20px !important;
   }
   .Card_Slider .info {
-    height: 175px;
-    padding-top: 5px;
-    padding-bottom: 15px;
+    height: 140px;
+    padding-top: 4px;
+    padding-bottom: 12px;
   }
     .Card_Slider .info h1{
     font-size: 1.1rem !important;
   }
+  .card-skeleton-info { height: 140px; padding-top: 4px; padding-bottom: 12px; }
     .Cards{
   grid-template-columns: repeat(5, 1fr) !important;
 max-width: 1600px;
@@ -756,11 +805,12 @@ direction: rtl;
     padding-top: 26px !important;
   }
   .Card_Slider .info {
-    height: 200px;
+    height: 160px;
   }
   .Card_Slider .info h1{
     font-size: 1.4rem !important;
   }
+  .card-skeleton-info { height: 160px; }
   .Cards{
   grid-template-columns: repeat(6, 1fr) !important;
 max-width: 1800px;
@@ -1422,14 +1472,14 @@ margin-top: auto;
 }
 
 .img-wrapper {
-  height: 15vh; 
+  height: 20vh; 
   overflow: hidden;
   border-radius: 8px 8px 0 0;
 }
 
 @media (min-width: 1000px) {
   .img-wrapper {
-    height: clamp(180px, 10vh, 270px); 
+    height: clamp(220px, 14vh, 320px); 
   }
 }
 
@@ -1677,19 +1727,22 @@ margin-top: auto;
   position: relative;
   overflow: hidden;
   border-radius: 10px;
+  background: #1C1C1C;
 }
 
 .skeleton-block::after {
   content: "";
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   border-radius: inherit;
   background: linear-gradient(
     90deg,
-    #242028 0%,
-    #2f2936 20%,
-    #242028 40%,
-    #242028 100%
+    #1C1C1C 0%,
+    #2a2a2a 20%,
+    #1C1C1C 40%,
+    #1C1C1C 100%
   );
   background-size: 200% 100%;
   animation: shimmer-rtl 1.2s infinite;
