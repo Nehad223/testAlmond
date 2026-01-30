@@ -1755,13 +1755,6 @@ margin-top: auto;
 .card-skeleton-line.long { width: 80%; }
 .card-skeleton-line.short { width: 45%; }
 
-.card-skeleton-btn {
-  height: 32px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #FFB703, #F77F00);
-  opacity: 0.85;
-}
-
 /* shimmer أنعم */
 .card-skeleton::before,
 .card-skeleton-img::before {
@@ -2091,26 +2084,22 @@ margin-top: auto;
   animation: skeleton-shimmer 1.4s infinite linear;
   z-index: 2;
 }
-
-/* إخفاء السكلتون لما الصورة تحمل */
 .card-slider.image-loaded .image-wrapper::before {
   opacity: 0;
   animation: none;
 }
-/* إخفاء النص أثناء تحميل الصورة */
 .Card_Slider.loading .info {
   opacity: 0;
   visibility: hidden;
 }
 
-/* إظهار النص بعد تحميل الصورة */
+
 .Card_Slider.loaded .info {
   opacity: 1;
   visibility: visible;
   transition: opacity 0.25s ease;
 }
 
-/* الصورة نفسها */
 .img-wrapper.loading img {
   opacity: 0;
 }
@@ -2120,9 +2109,78 @@ margin-top: auto;
   transition: opacity .3s ease;
 }
 
-/* السكلتون */
 .Card_Slider.loaded .card-skeleton-overlay {
   opacity: 0;
   pointer-events: none;
   transition: opacity .2s ease;
+}
+/* ---------- IMAGE ---------- */
+.img-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.sk-image {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #eee 25%,
+    #f5f5f5 37%,
+    #eee 63%
+  );
+  animation: shimmer 1.2s infinite;
+}
+
+.img-hide {
+  opacity: 0;
+}
+
+.img-show {
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+/* ---------- TEXT ---------- */
+.sk-text {
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    #e0e0e0 25%,
+    #f0f0f0 37%,
+    #e0e0e0 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.2s infinite;
+  border-radius: 6px;
+}
+
+/* price height fix */
+.price {
+  min-height: 1.4em;
+}
+
+/* ---------- BUTTON ---------- */
+.sk-btn button {
+  opacity: 0;
+}
+
+.sk-btn {
+  height: 38px;
+  background: linear-gradient(
+    90deg,
+    #e0e0e0 25%,
+    #f0f0f0 37%,
+    #e0e0e0 63%
+  );
+  border-radius: 10px;
+  animation: shimmer 1.2s infinite;
+}
+
+/* ---------- SHIMMER ---------- */
+@keyframes shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
 }
