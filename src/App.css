@@ -94,7 +94,7 @@ background: linear-gradient(135deg, #FFB703, #F77F00);
     rgba(255,255,255,0.05) 100%
   );
   background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
+  animation: shimmer-rtl 1.2s infinite;
 }
 .store-inner{
   position: relative;
@@ -223,7 +223,7 @@ font-size: 0.8rem;
     #242028 100%
   );
   background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
+  animation: shimmer-rtl 1.2s infinite;
 }
 
 .skeleton-navbar {
@@ -243,6 +243,8 @@ font-size: 0.8rem;
     rgba(0,0,0,0.05) 40%,
     rgba(0,0,0,0.05) 100%
   );
+  background-size: 200% 100%;
+  animation: shimmer-rtl 1.2s infinite;
 }
 
 
@@ -352,6 +354,7 @@ button::-moz-focus-inner { border: 0; }
   gap: 7px;
   box-sizing: border-box;
   margin-top: 4px;
+  direction: rtl;
 }
 
 .cards-skeleton-item {
@@ -386,7 +389,7 @@ button::-moz-focus-inner { border: 0; }
     rgba(255,255,255,0.05) 100%
   );
   background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
+  animation: shimmer-rtl 1.2s infinite;
 }
 
 .card-skeleton-info {
@@ -406,7 +409,7 @@ button::-moz-focus-inner { border: 0; }
     rgba(255,255,255,0.08) 60%
   );
   background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
+  animation: shimmer-rtl 1.2s infinite;
 }
 
 .card-skeleton-line.long {
@@ -438,7 +441,7 @@ button::-moz-focus-inner { border: 0; }
     rgba(255,255,255,0.05) 100%
   );
   background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
+  animation: shimmer-rtl 1.2s infinite;
 }
 
 
@@ -492,7 +495,7 @@ button::-moz-focus-inner { border: 0; }
     #242028 100%
   );
   background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
+  animation: shimmer-rtl 1.2s infinite;
   z-index: 2;
 }
 
@@ -518,7 +521,7 @@ button::-moz-focus-inner { border: 0; }
     #242028 100%
   );
   background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
+  animation: shimmer-rtl 1.2s infinite;
 }
 
 .img-wrapper.loading img {
@@ -1680,18 +1683,23 @@ margin-top: auto;
   content: "";
   position: absolute;
   inset: 0;
-  transform: translateX(-100%);
+  border-radius: inherit;
   background: linear-gradient(
     90deg,
-    transparent,
-    rgba(255, 255, 255, 0.6),
-    transparent
+    #242028 0%,
+    #2f2936 20%,
+    #242028 40%,
+    #242028 100%
   );
-  animation: shimmer 1.3s infinite;
+  background-size: 200% 100%;
+  animation: shimmer-rtl 1.2s infinite;
 }
 
-@keyframes shimmer {
+@keyframes shimmer-rtl {
+  0% {
+    background-position: 100% 0;
+  }
   100% {
-    transform: translateX(100%);
+    background-position: -100% 0;
   }
 }
