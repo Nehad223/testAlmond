@@ -1960,3 +1960,57 @@ margin-top: auto;
     transform: translateY(0);
   }
 }
+/* ===============================
+   GLOBAL SKELETON FIX
+   =============================== */
+
+.skeleton,
+.skeleton * {
+  position: relative;
+  overflow: hidden;
+  background-color: #0f0f0f; /* نفس لونك */
+}
+
+/* السكلتون الأساسي */
+.skeleton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #0f0f0f 0%,
+    #1c1c1c 40%,
+    #2a2a2a 50%,
+    #1c1c1c 60%,
+    #0f0f0f 100%
+  );
+  animation: skeleton-shimmer 1.4s infinite linear;
+}
+
+/* ❌ إلغاء أي تأثير بعد التحميل */
+.skeleton::after {
+  display: none !important;
+  content: none !important;
+  animation: none !important;
+}
+
+/* أنيميشن واحد فقط – نفس before */
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* لما يخلص التحميل */
+.skeleton.loaded::before {
+  opacity: 0;
+  animation: none;
+}
+
+/* تأكيد ما في أي أنيميشن إضافية */
+.skeleton.loaded::after {
+  display: none !important;
+}
