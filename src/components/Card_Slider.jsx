@@ -62,43 +62,35 @@ const Card_Slider = ({
 
   return (
     <>
-<div className={`Card_Slider card ${loaded ? "loaded" : "loading"}`}>
-
+      <div className={`Card_Slider card ${!loaded ? "card-skeleton" : ""}`}>
         {!loaded && <div className="card-skeleton-overlay" />}
 
-<div className="img-wrapper">
-  {!loaded && <div className="sk-image" />}
-  <img
-    src={Img || "/exampel.jpg"}
-    onLoad={() => setLoaded(true)}
-    onError={() => setLoaded(true)}
-    alt={Title}
-    className={loaded ? "img-show" : "img-hide"}
-  />
-</div>
+        <div className={`img-wrapper ${loaded ? "loaded" : "loading"}`}>
+          <img
+            src={Img || "/exampel.jpg"}
+            loading="lazy"
+            onLoad={() => setLoaded(true)}
+            onError={() => setLoaded(true)}
+            alt={Title}
+          />
+        </div>
 
-<div className="info">
-  <h1 className={`ar ${!loaded ? "sk-text" : ""}`}>{Title}</h1>
-  <h1 className={`en ${!loaded ? "sk-text" : ""}`}>{TitleEng}</h1>
-  <h1 className={!loaded ? "sk-text price" : "price"}>
-    {PriceNumber} ل.س
-  </h1>
-
-  {!isAdmin && (
-    <div className={!loaded ? "sk-btn" : ""}>
-      <Add_Store_Btn
-        meal={{
-          id: Id,
-          name: Title,
-          price: PriceNumber,
-          image: Img,
-        }}
-        onAddToCart={onAddToCart}
-      />
-    </div>
-  )}
-</div>
-
+        <div className="info">
+          <h1 className="ar">{Title}</h1>
+          <h1 className="en">{TitleEng}</h1>
+          <h1>{PriceNumber} ل.س</h1>
+          {!isAdmin && (
+            <Add_Store_Btn
+              meal={{
+                id: Id,
+                name: Title,
+                price: PriceNumber,
+                image: Img,
+              }}
+              onAddToCart={onAddToCart}
+            />
+          )}
+        </div>
 
         {isAdmin && (
           <div

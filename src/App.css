@@ -1,4 +1,5 @@
 
+
 :root {
   --font-ar: 'Cairo', system-ui, sans-serif;
   --font-en: 'Poppins', system-ui, sans-serif;
@@ -76,7 +77,7 @@ background: linear-gradient(135deg, #FFB703, #F77F00);
 
 .store-skeleton {
   position: relative;
-
+  border-radius: 100px;
   background: linear-gradient(135deg, #F39C12, #D35400);
   overflow: hidden;
 }
@@ -86,7 +87,7 @@ background: linear-gradient(135deg, #FFB703, #F77F00);
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    270deg,
+    90deg,
     rgba(255,255,255,0.05) 0%,
     rgba(255,255,255,0.35) 25%,
     rgba(255,255,255,0.05) 50%,
@@ -206,6 +207,7 @@ font-size: 0.8rem;
 .skeleton-block {
   position: relative;
   overflow: hidden;
+  border-radius: 12px;
   background: #242028;
 }
 
@@ -214,7 +216,7 @@ font-size: 0.8rem;
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    270deg,
+    90deg,
     #242028 0%,
     #2f2936 20%,
     #242028 40%,
@@ -235,7 +237,7 @@ font-size: 0.8rem;
 
 .logo-skeleton::before {
   background: linear-gradient(
-    270deg,
+    90deg,
     rgba(0,0,0,0.05) 0%,
     rgba(255,255,255,0.25) 20%,
     rgba(0,0,0,0.05) 40%,
@@ -352,7 +354,16 @@ button::-moz-focus-inner { border: 0; }
   margin-top: 4px;
 }
 
+.cards-skeleton-item {
+  height: 100%;
+}
 
+.card-skeleton {
+  position: relative;
+  border-radius: 8px;
+  background-color: #1A1A22;
+  overflow: hidden;
+}
 
 .card-skeleton-img {
   width: 100%;
@@ -368,7 +379,7 @@ button::-moz-focus-inner { border: 0; }
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    270deg,
+    90deg,
     rgba(255,255,255,0.05) 0%,
     rgba(255,255,255,0.35) 25%,
     rgba(255,255,255,0.05) 50%,
@@ -389,7 +400,7 @@ button::-moz-focus-inner { border: 0; }
   height: 10px;
   border-radius: 999px;
   background: linear-gradient(
-    270deg,
+    90deg,
     rgba(255,255,255,0.05) 0%,
     rgba(255,255,255,0.4) 30%,
     rgba(255,255,255,0.08) 60%
@@ -407,7 +418,7 @@ button::-moz-focus-inner { border: 0; }
 }
 
 .card-skeleton-btn {
-  margin-top: 35px;
+  margin-top: 4px;
   height: 28px;
   border-radius: 999px;
   background: linear-gradient(135deg, #FFB703, #F77F00);
@@ -420,7 +431,7 @@ button::-moz-focus-inner { border: 0; }
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    270deg,
+    90deg,
     rgba(255,255,255,0.05) 0%,
     rgba(255,255,255,0.35) 25%,
     rgba(255,255,255,0.05) 50%,
@@ -474,7 +485,7 @@ button::-moz-focus-inner { border: 0; }
   inset: 0;
   border-radius: 8px;
   background: linear-gradient(
-    270deg,
+    90deg,
     #242028 0%,
     #2f2936 20%,
     #242028 40%,
@@ -500,7 +511,7 @@ button::-moz-focus-inner { border: 0; }
   inset: 0;
   border-radius: inherit;
   background: linear-gradient(
-    270deg,
+    90deg,
     #242028 0%,
     #2f2936 20%,
     #242028 40%,
@@ -1262,6 +1273,8 @@ button[disabled],
 @keyframes spin{
   to{ transform: translate(-50%, -50%) rotate(360deg); }
 }
+
+
 .checkout-sending-overlay{
   position: absolute;
   inset: 0;
@@ -1643,13 +1656,15 @@ margin-top: auto;
   display: flex;
   align-items: center;
   gap: 8px;
-  direction: rtl;          
+  direction: rtl;          /* مهم */
 }
+
 .notes-header label {
   font-size: 0.85rem;
   font-weight: 700;
   color: #f3d98b;
 }
+
 .notes-header img {
   width: 18px;
   height: 18px;
@@ -1658,15 +1673,16 @@ margin-top: auto;
 .skeleton-block {
   position: relative;
   overflow: hidden;
+  border-radius: 10px;
 }
 
 .skeleton-block::after {
   content: "";
   position: absolute;
   inset: 0;
-  transform: translateX(100%);
+  transform: translateX(-100%);
   background: linear-gradient(
-    270deg,
+    90deg,
     transparent,
     rgba(255, 255, 255, 0.6),
     transparent
@@ -1676,511 +1692,6 @@ margin-top: auto;
 
 @keyframes shimmer {
   100% {
-    transform: translateX(-100%);
-  }
-}
-
-.img-wrapper {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 8px 8px 0 0;
-  background: #1f1a12;
-}
-
-/* Skeleton */
-.img-wrapper::before {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    270deg,
-    #242028 0%,
-    #2f2936 20%,
-    #242028 40%
-    #242028 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
-  z-index: 1;
-}
-/* ===========================
-   CARD + SKELETON FINAL FIX
-   =========================== */
-
-/* 1) تثبيت أبعاد الكارد (قبل / بعد التحميل) */
-.Card_Slider {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.img-wrapper,
-.card-skeleton-img {
-  height: 15vh;
-  min-height: 150px;
-  background: #1A1A22;
-  border-radius: 8px 8px 0 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.Card_Slider .info,
-.card-skeleton-info {
-  min-height: 140px;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-/* شاشات كبيرة */
-@media (min-width: 1200px) {
-  .img-wrapper,
-  .card-skeleton-img {
-    min-height: 180px;
-  }
-
-  .Card_Slider .info,
-  .card-skeleton-info {
-    min-height: 170px;
-  }
-}
-
-
-
-.card-skeleton-line {
-  height: 11px;
-  border-radius: 6px;
-  background: rgba(255,255,255,0.08);
-}
-
-.card-skeleton-line.long { width: 80%; }
-.card-skeleton-line.short { width: 45%; }
-
-/* shimmer أنعم */
-.card-skeleton::before,
-.card-skeleton-img::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,0.12),
-    transparent
-  );
-  transform: translateX(-100%);
-  animation: shimmer-soft 1.6s infinite;
-  pointer-events: none;
-}
-
-@keyframes shimmer-soft {
-  to {
     transform: translateX(100%);
   }
-}
-
-
-.img-wrapper img {
-  opacity: 0;
-  transform: scale(1.05);
-  transition: opacity .35s ease, transform .45s ease;
-}
-
-.img-wrapper.loaded img {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.img-wrapper.loaded::before {
-  opacity: 0;
-  transition: opacity .25s ease;
-}
-
-/* 4) فصل ناعم بين الصورة والمحتوى */
-.Card_Slider .info {
-  position: relative;
-  background: #1F1A17;
-}
-
-.Card_Slider .info::before {
-  position: absolute;
-  top: -12px;
-  left: 0;
-  right: 0;
-  height: 12px;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.35),
-    transparent
-  );
-}
-
-/* 5) أنيميشن دخول أخف للكارد */
-.Cards > div {
-  animation: cardFadeUp-soft .35s ease forwards;
-}
-
-@keyframes cardFadeUp-soft {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 6) احترام تقليل الحركة */
-@media (prefers-reduced-motion: reduce) {
-  .card-skeleton::before,
-  .card-skeleton-img::before,
-  .Cards > div {
-    animation: none !important;
-  }
-
-  .img-wrapper img {
-    transition: none;
-  }
-}
-
-
-/* =====================================
-   CARD SLIDER – FINAL LOADING FIX
-   ضيف هاد الكود بآخر الملف
-   ===================================== */
-
-/* تثبيت بنية الكارد */
-.Card_Slider {
-  position: relative;
-  overflow: hidden;
-}
-
-/* ======================
-   SKELETON OVERLAY
-   ====================== */
-.card-skeleton-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-  background: linear-gradient(
-    270deg,
-    #242028 0%,
-    #2f2936 20%,
-    #242028 40%,
-    #242028 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
-  opacity: 1;
-}
-
-/* ======================
-   IMAGE LOADING BEHAVIOR
-   ====================== */
-.img-wrapper {
-  position: relative;
-  overflow: hidden;
-}
-
-/* الصورة مخفية وقت التحميل */
-.img-wrapper.loading img {
-  opacity: 0;
-  transform: scale(1.05);
-}
-
-/* بعد التحميل */
-.img-wrapper.loaded img {
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity .35s ease, transform .45s ease;
-}
-
-/* ======================
-   TEXT / INFO BEHAVIOR
-   ====================== */
-
-/* اخفاء النص بالكامل وقت التحميل */
-.Card_Slider.loading .info {
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* اظهار النص بعد اكتمال التحميل */
-.Card_Slider.loaded .info {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity .25s ease;
-}
-
-/* ======================
-   REMOVE SKELETON
-   ====================== */
-.Card_Slider.loaded .card-skeleton-overlay {
-  opacity: 0;
-  transition: opacity .2s ease;
-}
-
-/* ======================
-   CARD APPEAR ANIMATION
-   ====================== */
-.Card_Slider.loaded {
-  animation: cardAppear .25s ease;
-}
-
-@keyframes cardAppear {
-  from {
-    opacity: .85;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-/* ===============================
-   GLOBAL SKELETON FIX
-   =============================== */
-
-.skeleton,
-.skeleton * {
-  position: relative;
-  overflow: hidden;
-  background-color: #0f0f0f; /* نفس لونك */
-}
-
-/* السكلتون الأساسي */
-.skeleton::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    #0f0f0f 0%,
-    #1c1c1c 40%,
-    #2a2a2a 50%,
-    #1c1c1c 60%,
-    #0f0f0f 100%
-  );
-  animation: skeleton-shimmer 1.4s infinite linear;
-}
-
-
-
-@keyframes skeleton-shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-/* لما يخلص التحميل */
-.skeleton.loaded::before {
-  opacity: 0;
-  animation: none;
-}
-
-/* تأكيد ما في أي أنيميشن إضافية */
-.skeleton.loaded::after {
-  display: none !important;
-}
-
-/* ===============================
-   SKELETON = CARD BACKGROUND FIX
-   ضيفه بآخر ملف CSS
-   =============================== */
-
-:root {
-  --card-bg-fix: #1F1A17; /* نفس لون خلفية الكارد */
-}
-
-/* توحيد خلفية الكارد بكل الحالات */
-
-.img-wrapper {
-  background: var(--card-bg-fix) !important;
-}
-
-/* وقت التحميل */
-
-.img-wrapper {
-  background: var(--card-bg-fix) !important;
-}
-
-/* السكلتون يكون نفس اللون (لمعة فقط) */
-.card-skeleton-overlay {
-  background: linear-gradient(
-    270deg,
-    var(--card-bg-fix) 0%,
-    rgba(255,255,255,0.06) 30%,
-    var(--card-bg-fix) 60%,
-    var(--card-bg-fix) 100%
-  ) !important;
-}
-
-/* منع أي اختلاف لوني من قبل/after */
-.img-wrapper::before,
-.Card_Slider::before,
-.Card_Slider::after {
-  background: none !important;
-}
-
-/* بعد التحميل */
-.Card_Slider.loaded .card-skeleton-overlay {
-  opacity: 0;
-  transition: opacity .2s ease;
-}
-/* ===============================
-   CARD SLIDER IMAGE LOADING FIX
-   =============================== */
-
-/* الكارد */
-.card-slider {
-  position: relative;
-}
-
-/* الصورة */
-.card-slider img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* سكلتون للصورة فقط */
-.card-slider .image-wrapper {
-  position: relative;
-  overflow: hidden;
-}
-
-/* النص مخفي بالبداية */
-.card-slider .card-info {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.25s ease;
-}
-
-/* لما الصورة تحمل */
-.card-slider img.loaded + .card-info,
-.card-slider.image-loaded .card-info {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* سكلتون الصورة */
-.card-slider .image-wrapper::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    #0f0f0f 0%,
-    #1c1c1c 40%,
-    #2a2a2a 50%,
-    #1c1c1c 60%,
-    #0f0f0f 100%
-  );
-  animation: skeleton-shimmer 1.4s infinite linear;
-  z-index: 2;
-}
-.card-slider.image-loaded .image-wrapper::before {
-  opacity: 0;
-  animation: none;
-}
-.Card_Slider.loading .info {
-  opacity: 0;
-  visibility: hidden;
-}
-
-
-.Card_Slider.loaded .info {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.25s ease;
-}
-
-.img-wrapper.loading img {
-  opacity: 0;
-}
-
-.img-wrapper.loaded img {
-  opacity: 1;
-  transition: opacity .3s ease;
-}
-
-.Card_Slider.loaded .card-skeleton-overlay {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s ease;
-}
-/* ---------- IMAGE ---------- */
-.img-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-}
-
-.sk-image {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    #eee 25%,
-    #f5f5f5 37%,
-    #eee 63%
-  );
-  animation: shimmer 1.2s infinite;
-}
-
-.img-hide {
-  opacity: 0;
-}
-
-.img-show {
-  opacity: 1;
-  transition: opacity .3s ease;
-}
-
-/* ---------- TEXT ---------- */
-.sk-text {
-  color: transparent;
-  background: linear-gradient(
-    90deg,
-    #e0e0e0 25%,
-    #f0f0f0 37%,
-    #e0e0e0 63%
-  );
-  background-size: 400% 100%;
-  animation: shimmer 1.2s infinite;
-  border-radius: 6px;
-}
-
-/* price height fix */
-.price {
-  min-height: 1.4em;
-}
-
-/* ---------- BUTTON ---------- */
-.sk-btn button {
-  opacity: 0;
-}
-
-.sk-btn {
-  height: 38px;
-  background: linear-gradient(
-    90deg,
-    #e0e0e0 25%,
-    #f0f0f0 37%,
-    #e0e0e0 63%
-  );
-  border-radius: 10px;
-  animation: shimmer 1.2s infinite;
-}
-
-/* ---------- SHIMMER ---------- */
-@keyframes shimmer {
-  0% { background-position: 100% 0; }
-  100% { background-position: -100% 0; }
 }
