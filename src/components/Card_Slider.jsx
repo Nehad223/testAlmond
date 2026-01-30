@@ -62,7 +62,8 @@ const Card_Slider = ({
 
   return (
     <>
-      <div className={`Card_Slider card ${!loaded ? "card-skeleton" : ""}`}>
+<div className={`Card_Slider card ${loaded ? "loaded" : "loading"}`}>
+
         {!loaded && <div className="card-skeleton-overlay" />}
 
         <div className={`img-wrapper ${loaded ? "loaded" : "loading"}`}>

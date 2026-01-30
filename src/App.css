@@ -2097,3 +2097,32 @@ margin-top: auto;
   opacity: 0;
   animation: none;
 }
+/* إخفاء النص أثناء تحميل الصورة */
+.Card_Slider.loading .info {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* إظهار النص بعد تحميل الصورة */
+.Card_Slider.loaded .info {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease;
+}
+
+/* الصورة نفسها */
+.img-wrapper.loading img {
+  opacity: 0;
+}
+
+.img-wrapper.loaded img {
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+/* السكلتون */
+.Card_Slider.loaded .card-skeleton-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}

@@ -319,3 +319,4 @@ const handleDelete = async (mealId) => {
 
 export default Main_page;
 
+
