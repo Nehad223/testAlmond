@@ -1993,3 +1993,48 @@ margin-top: auto;
 .skeleton.loaded::after {
   display: none !important;
 }
+
+/* ===============================
+   SKELETON = CARD BACKGROUND FIX
+   ضيفه بآخر ملف CSS
+   =============================== */
+
+:root {
+  --card-bg-fix: #1F1A17; /* نفس لون خلفية الكارد */
+}
+
+/* توحيد خلفية الكارد بكل الحالات */
+
+.img-wrapper {
+  background: var(--card-bg-fix) !important;
+}
+
+/* وقت التحميل */
+
+.img-wrapper {
+  background: var(--card-bg-fix) !important;
+}
+
+/* السكلتون يكون نفس اللون (لمعة فقط) */
+.card-skeleton-overlay {
+  background: linear-gradient(
+    270deg,
+    var(--card-bg-fix) 0%,
+    rgba(255,255,255,0.06) 30%,
+    var(--card-bg-fix) 60%,
+    var(--card-bg-fix) 100%
+  ) !important;
+}
+
+/* منع أي اختلاف لوني من قبل/after */
+.img-wrapper::before,
+.Card_Slider::before,
+.Card_Slider::after {
+  background: none !important;
+}
+
+/* بعد التحميل */
+.Card_Slider.loaded .card-skeleton-overlay {
+  opacity: 0;
+  transition: opacity .2s ease;
+}
