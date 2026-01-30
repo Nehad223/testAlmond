@@ -236,6 +236,7 @@ const handleDelete = async (mealId) => {
           </div>
           
             <div >
+
                 <Store count={cartCount} onToggle={() => setCartOpen(true)} />
        
             </div>
