@@ -2,6 +2,9 @@
   --font-ar: 'Cairo', system-ui, sans-serif;
   --font-en: 'Poppins', system-ui, sans-serif;
   --header-height: clamp(100px, 26vh, 350px) !important; 
+  --skeleton-img-bg: #F39C12; /* orange for image skeleton */
+  --skeleton-info-bg: #2a2a2a; /* gray for info skeleton */
+  --card-info-bg: #181412; /* slightly darker background for Card_Slider .info */
 }
 
 body {
@@ -356,7 +359,7 @@ button::-moz-focus-inner { border: 0; }
   min-height: 0;
   flex-shrink: 0;
   border-radius: 8px 8px 0 0;
-  background: #1C1C1C;
+  background: var(--skeleton-img-bg);
   position: relative;
   overflow: hidden;
 }
@@ -391,12 +394,6 @@ button::-moz-focus-inner { border: 0; }
    the white highlight from .card-skeleton-img::before is visible on top */
 .card-skeleton .img-wrapper::before {
   display: none;
-}
-
-/* hide the actual img-wrapper entirely while skeleton is shown so the
-   white shimmer on .card-skeleton-img is not covered */
-.card-skeleton .card-skeleton-loading-hidden.img-wrapper {
-  display: none !important;
 }
 
 .card-skeleton-info {
@@ -618,10 +615,29 @@ button::-moz-focus-inner { border: 0; }
   width: 100%;
   padding: 5px;
   text-align: center;
-  background: #1F1A17;
+  background: var(--card-info-bg);
   color: #E6CEB4 !important;
   border-radius: 0 0 8px 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,.1);
+}
+
+/* Swap backgrounds when showing skeletons: image uses info bg and info uses image bg */
+.card-skeleton .card-skeleton-img {
+  background: var(--skeleton-img-bg) !important;
+}
+.card-skeleton .card-skeleton-info {
+  background: var(--skeleton-info-bg) !important;
+}
+
+/* keep the img-wrapper present so the image can load; only hide its overlay */
+.card-skeleton .img-wrapper::before {
+  display: none;
+}
+
+/* make the skeleton lines/buttons inherit the info background color when skeleton is active */
+.card-skeleton .card-skeleton-line,
+.card-skeleton .card-skeleton-btn {
+  background: var(--skeleton-info-bg) !important;
 }
 
 .price-modal-overlay {
