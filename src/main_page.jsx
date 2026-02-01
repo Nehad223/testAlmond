@@ -1,15 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-
 import Logo from "./components/Logo";
 import Navbar from "./components/Navbar";
 import Cards from "./components/Cards";
 import Loader from "./components/Loader.jsx";
 import Store from "./components/Store.jsx";
 import CartDrawer from "./components/CartDrawer.jsx";
-
 const CART_MAX_QTY = 99;
-
 const Main_page = ({
   isAdmin = false,
   onDelete,
@@ -318,5 +315,6 @@ const handleDelete = async (mealId) => {
 };
 
 export default Main_page;
+
 
 
