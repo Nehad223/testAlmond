@@ -17,6 +17,7 @@ const Main_page = ({
   const [loading, setLoading] = useState(true);
   const [cartOpen, setCartOpen] = useState(false);
   const [cart, setCart] = useState([]);
+  const [error, setError] = useState(false);
 
   const contentRef = useRef(null);
 
@@ -27,7 +28,10 @@ const Main_page = ({
     arr.reduce((s, i) => s + (i.qty || 0), 0);
 
   /* ===================== FETCH DATA ===================== */
-  useEffect(() => {
+  const fetchData = async () => {
+    setLoading(true);
+    setError(false);
+
     const criticalImages = ["/name.webp", "/location.webp", "/phone.webp"];
 
     const preloadImages = Promise.all(
@@ -44,16 +48,26 @@ const Main_page = ({
       )
     );
 
-    fetch("https://snackalmond.duckdns.org/home/")
-      .then(res => res.json())
-      .then(json => {
-        setData(json);
-        setActiveCategory(0);
-        return preloadImages;
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      const API_BASE = import.meta.env.VITE_API_BASE || "https://snackalmond.duckdns.org";
+      const res = await fetch(`${API_BASE}/home/`);
+      if (!res.ok) throw new Error("Network response was not ok");
+      const json = await res.json();
+      setData(json);
+      setActiveCategory(0);
+      await preloadImages;
+    } catch (err) {
+      console.error(err);
+      setError(true);
+      toast.error("فشل تحميل البيانات. حاول مرة أخرى.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /* ===================== RESET SCROLL ===================== */
@@ -252,7 +266,17 @@ const handleDelete = async (mealId) => {
 
       <main className="main-scroll" ref={contentRef}>
         <div className="content-wrap" key={activeCategory}>
-          {loading ? (
+          {error ? (
+            <div style={{ textAlign: 'center', padding: '6vh 2vh' }}>
+              <p style={{ color: '#fff', fontSize: '1.05rem' }}>حدث خطأ أثناء تحميل المحتوى.</p>
+              <button
+                onClick={() => fetchData()}
+                style={{ marginTop: 12, padding: '8px 14px', borderRadius: 8, border: 'none', background: '#c9a24d', color: '#111', fontWeight: 700 }}
+              >
+                إعادة المحاولة
+              </button>
+            </div>
+          ) : loading ? (
             <div className="cards-skeleton-grid">
               {Array.from({ length: 8 }).map((_, idx) => (
                 <div key={idx} className="cards-skeleton-item">

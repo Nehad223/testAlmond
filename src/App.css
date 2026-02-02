@@ -167,6 +167,12 @@ body {
   pointer-events: none;
 }
 
+@media (min-width: 1200px) {
+  .logo img {   width: 40vh;
+  padding-top: 15px;
+
+}
+}
 .logo-wrapper {
   width: 100%;
   display: flex;
@@ -224,8 +230,10 @@ body {
 
 
 .gn-navbar {
+
   position: relative;
   width: 100% !important;
+
   padding: 5px;
   background-color: #1C1C1C !important;
   box-sizing: border-box;
@@ -752,6 +760,10 @@ max-width: 1200px;
 
   .cards-skeleton-grid {
     grid-template-columns: repeat(3, 1fr) !important;
+max-width: 1200px;
+direction: rtl;
+
+
   }
 
 }
@@ -779,7 +791,10 @@ max-width: 1200px;
   }
 
   .cards-skeleton-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+max-width: 1200px;
+direction: rtl;
+
   }
 
 }
@@ -817,6 +832,8 @@ direction: rtl;
   .cards-skeleton-grid {
     grid-template-columns: repeat(5, 1fr) !important;
     max-width: 1600px;
+direction: rtl;
+
   }
 }
 
@@ -846,8 +863,9 @@ direction: rtl;
   }
 
   .cards-skeleton-grid {
-    grid-template-columns: repeat(5, 1fr) !important;
-    max-width: 1600px;
+    grid-template-columns: repeat(6, 1fr) !important;
+    max-width: 1800px;
+direction: rtl;
   }
 
 }
@@ -1528,5 +1546,76 @@ button[disabled],
   }
   100% {
     background-position: 100% 0;
+  }
+}
+
+/* Custom scrollbar for cards on desktop (tuned for site colors) */
+@media (min-width: 1000px) {
+  .Cards,
+  .cards-skeleton-grid {
+    /* Firefox: thumb then track */
+    scrollbar-width: thin;
+    scrollbar-color: #2b2b2b #14110f;
+  }
+
+  .Cards::-webkit-scrollbar,
+  .cards-skeleton-grid::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  .Cards::-webkit-scrollbar-track,
+  .cards-skeleton-grid::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.04);
+    border-radius: 10px;
+  }
+
+  .Cards::-webkit-scrollbar-thumb,
+  .cards-skeleton-grid::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg,#2b2b2b,#1f1a17);
+    border-radius: 10px;
+    border: 3px solid #f3d98b; /* gold accent */
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.25);
+  }
+
+  .Cards::-webkit-scrollbar-thumb:hover,
+  .cards-skeleton-grid::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg,#343434,#26221f);
+    border-color: #f3d98b;
+  }
+
+  /* Also apply to the main scrolling container so page scrollbar matches site */
+  .main-scroll,
+  body,
+  html {
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #2b2b2b #0f0d0c;
+  }
+
+  .main-scroll::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  html::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  .main-scroll::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track,
+  html::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.03);
+  }
+
+  .main-scroll::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb,
+  html::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg,#2b2b2b,#1f1a17);
+    border-radius: 10px;
+    border: 3px solid #f3d98b;
+  }
+
+  .main-scroll::-webkit-scrollbar-thumb:hover,
+  body::-webkit-scrollbar-thumb:hover,
+  html::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg,#343434,#26221f);
   }
 }
