@@ -268,7 +268,7 @@ const handleDelete = async (mealId) => {
         <div className="content-wrap" key={activeCategory}>
           {error ? (
             <div style={{ textAlign: 'center', padding: '6vh 2vh' }}>
-              <p style={{ color: '#fff', fontSize: '1.05rem' }}>حدث خطأ أثناء تحميل المحتوى.</p>
+              <p style={{ color: '#fff', fontSize: '1.05rem' }}>حدث خطأ أثناء تحميل المحتوى</p>
               <button
                 onClick={() => fetchData()}
                 style={{ marginTop: 12, padding: '8px 14px', borderRadius: 8, border: 'none', background: '#c9a24d', color: '#111', fontWeight: 700 }}
