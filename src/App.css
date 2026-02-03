@@ -168,8 +168,12 @@ body {
 }
 
 @media (min-width: 1200px) {
-  .logo img {   width: 32vh;
-    height: 22vh;
+  :root{
+  --header-height: clamp(100px, 30vh, 350px) !important; 
+
+  }
+  .logo img {   width: 34vh;
+    height: 24vh;
   padding-top: 20px;
 
 }
